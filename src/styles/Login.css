@@ -27,7 +27,6 @@
   font-family: Roboto, sans-serif;
   font-size: 14px;
   margin: 0 0 15px;
-  outline: 0;
   padding: 15px;
   width: 100%;
 }
@@ -35,11 +34,10 @@
 .form button {
   background: #4d4d4d;
   border: 0;
-  cursor: pointer;
   color: white;
+  cursor: pointer;
   font-family: Roboto, sans-serif;
   font-size: 14px;
-  outline: 0;
   padding: 15px;
   text-transform: uppercase;
   transition: all 0.3 ease;
