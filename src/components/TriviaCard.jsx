@@ -18,6 +18,8 @@ const TriviaCard = ({ data }) => {
   return (
     <>
       <p data-testid="question-category">{data.category}</p>
+      <p>{data.type}</p>
+      <p>{data.difficulty}</p>
       <p data-testid="question-text">{data.question}</p>
       {randomTriviaAnswers
         .map((answer, index) => (answer === findCorrectAnswer(randomTriviaAnswers, data) ? (
