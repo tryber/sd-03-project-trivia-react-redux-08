@@ -59,10 +59,11 @@ class Login extends React.Component {
 
   renderButton() {
     const { email, name } = this.state;
+    const disable = (!(email && name));
     return (
       <button
         data-testid="btn-play"
-        disabled={!email && !name}
+        disabled={disable}
         type="button"
       >
         Jogar
