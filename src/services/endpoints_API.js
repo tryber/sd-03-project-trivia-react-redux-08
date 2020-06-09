@@ -9,6 +9,17 @@ export const getTriviaToken = async () => {
   return data;
 };
 
+// Obtendo categorias da API Trivia
+export const getTriviaCategories = async () => {
+  const CATEGORIES_URL = 'https://opentdb.com/api_category.php';
+  const response = await fetch(CATEGORIES_URL);
+  const json = await response.json();
+  const data = await await (response.ok
+    ? Promise.resolve(json)
+    : Promise.reject(json));
+  return data;
+};
+
 // Obtendo questões da API Trivia
 export const getTriviaQuestions = async (
   token,
