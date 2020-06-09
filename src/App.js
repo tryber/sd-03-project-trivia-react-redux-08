@@ -6,6 +6,7 @@ import {
   Home,
   NotFound,
   Ranking,
+  Settings,
 } from './pages';
 import logo from './trivia.png';
 import './App.css';
@@ -22,6 +23,7 @@ export default function App() {
         <Route exact path="/game" component={Game} />
         <Route exact path="/feedback" component={Feedback} />
         <Route exact path="/ranking" component={Ranking} />
+        <Route exact path="/settings" component={Settings} />
         <Route component={NotFound} />
       </Switch>
     </div>
