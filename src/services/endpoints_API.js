@@ -10,8 +10,13 @@ export const getTriviaToken = async () => {
 };
 
 // Obtendo questões da API Trivia
-export const getTriviaQuestions = async (token) => {
-  const QUESTIONS_URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+export const getTriviaQuestions = async (
+  token,
+  categoryID,
+  difficulty,
+  type,
+) => {
+  const QUESTIONS_URL = `https://opentdb.com/api.php?amount=5&category=${categoryID}&difficulty=${difficulty}&type=${type}&token=${token}`;
   const response = await fetch(QUESTIONS_URL);
   const json = await response.json();
   const data = await (response.ok
