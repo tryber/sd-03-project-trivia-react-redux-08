@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import hashedMail from '../services/encrypt_mail';
+import TriviaCard from '../components/TriviaCard';
 
 class Game extends Component {
   render() {
@@ -15,10 +16,9 @@ class Game extends Component {
             data-testid="header-profile-picture"
           />
           <span data-testid="header-player-name">{user}</span>
-          <span data-testid="header-score">
-            {`Placar:${score}`}
-          </span>
+          <span data-testid="header-score">{`Placar:${score}`}</span>
         </header>
+        <TriviaCard />
       </main>
     );
   }
