@@ -7,7 +7,7 @@ objetos com uma chave sort randomica
   da array original randomicamente organizados */
 
 const shuffleQuestions = (array) => array
-  .map((item) => ({ sort: Math.random(), value: item }))
+  .map((item) => ({ sort: (Math.random() * Math.random()), value: item }))
   .sort((itemA, itemB) => itemA.sort - itemB.sort)
   .map((item) => item.value);
 
