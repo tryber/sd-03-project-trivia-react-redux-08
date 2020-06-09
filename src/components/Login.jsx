@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Login.css';
 
 class Login extends React.Component {
@@ -74,6 +75,15 @@ class Login extends React.Component {
     return (
       <div className="login-form">
         <div className="form">
+          <Link
+            className="label"
+            data-testid="btn-settings"
+            to="/settings"
+          >
+            Configurações
+          </Link>
+          <br />
+          <br />
           {this.renderEmail()}
           <br />
           {this.renderName()}
