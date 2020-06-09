@@ -16,7 +16,7 @@ const findCorrectAnswer = (array, { correct_answer: correctAnswer }) => array
 const TriviaCard = ({ data }) => {
   const randomTriviaAnswers = shuffleQuestions(answers(data));
   return (
-    <>
+    <section>
       <p data-testid="question-category">{data.category}</p>
       <p>{data.type}</p>
       <p>{data.difficulty}</p>
@@ -35,7 +35,7 @@ const TriviaCard = ({ data }) => {
             {answer}
           </button>
         )))}
-    </>
+    </section>
   );
 };
 

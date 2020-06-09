@@ -16,13 +16,9 @@ class Game extends Component {
             data-testid="header-profile-picture"
           />
           <span data-testid="header-player-name">{user}</span>
-          <span data-testid="header-score">
-            {`Placar:${score}`}
-          </span>
+          <span data-testid="header-score">{`Placar:${score}`}</span>
         </header>
-        <section>
-          <TriviaCard />
-        </section>
+        <TriviaCard />
       </main>
     );
   }
