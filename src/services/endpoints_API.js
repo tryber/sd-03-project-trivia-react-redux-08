@@ -35,14 +35,3 @@ export const getTriviaQuestions = async (
     : Promise.reject(json));
   return data;
 };
-
-// Obtendo informações da API Gravatar
-export const getAvatar = async (hash) => {
-  const AVATAR_URL = `https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`;
-  const response = await fetch(AVATAR_URL);
-  const json = await response.json();
-  const data = await (response.ok
-    ? Promise.resolve(json)
-    : Promise.reject(json));
-  return data;
-};
