@@ -14,11 +14,9 @@ export default function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* style on the line 18 is a placeholder so i can see things displayed on the screen */}
         <img src={logo} className="App-logo" alt="logo" style={{ width: 600 }} />
         <p>SUA VEZ</p>
       </header>
-
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/game" component={Game} />
