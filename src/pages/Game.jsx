@@ -6,6 +6,15 @@ import hashedMail from '../services/encrypt_mail';
 import TriviaCard from '../components/TriviaCard';
 
 class Game extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      questionIndex: 0,
+      timer: 30,
+    };
+  }
+
   componentDidMount() {
     const {
       getTriviaQuestions, categoryID, difficulty, type,
@@ -15,21 +24,25 @@ class Game extends Component {
   }
 
   render() {
-    const { user, score, email } = this.props;
-    const hash = hashedMail(email);
-    return (
+    const {
+      userName, score, userEmail, loggedIn,
+    } = this.props;
+    const hash = hashedMail(userEmail);
+    return loggedIn ? (
       <main>
         <header>
           <img
             src={`https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`}
-            alt={`${user} avatar`}
+            alt={`${userName} avatar`}
             data-testid="header-profile-picture"
           />
-          <span data-testid="header-player-name">{user}</span>
+          <span data-testid="header-player-name">{userName}</span>
           <span data-testid="header-score">{`Placar:${score}`}</span>
         </header>
         <TriviaCard />
       </main>
+    ) : (
+      <h1>Oops! Please, log to play!</h1>
     );
   }
 }
@@ -43,20 +56,19 @@ Game.defaultProps = {
 Game.propTypes = {
   categoryID: PropTypes.string,
   difficulty: PropTypes.string,
-  email: PropTypes.string.isRequired,
   getTriviaQuestions: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
   score: PropTypes.number.isRequired,
   type: PropTypes.string,
-  user: PropTypes.string.isRequired,
+  userEmail: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getTriviaQuestions: (
-    token,
+  getTriviaQuestions: (token,
     categoryID,
     difficulty,
-    type,
-  ) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
+    type) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
 });
 
 export default connect(null, mapDispatchToProps)(Game);
