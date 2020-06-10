@@ -81,6 +81,7 @@ class Login extends React.Component {
       <button
         data-testid="btn-play"
         disabled={(!(email && name))}
+        onClick={() => this.handlePlay()}
         type="button"
       >
         Jogar
