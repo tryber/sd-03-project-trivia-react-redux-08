@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import { getTriviaToken } from '../services/endpoints_API';
 import { setUserInfo } from '../actions/actionsCreators';
 import '../styles/Login.css';
 
@@ -9,14 +11,10 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      email: '',
-      name: '',
+      userEmail: '',
+      userName: '',
+      token: '',
     };
-  }
-
-  submitData() {
-    const { email, name } = this.state;
-    console.log(email, name, 'were submited');
   }
 
   handleStateChange(field, value) {
@@ -26,14 +24,24 @@ class Login extends React.Component {
     }));
   }
 
-  requestToken() {
-    // request token to the api
-    const { name, email } = this.state;
-    console.log(name, email, 'foi eviada a requisição');
+  validateEmail() {
+    const { userEmail } = this.state;
+    return /^[a-zA-Z0-9]+@[a-zA-Z0-9]+.[A-Za-z]+$/.test(userEmail);
+  }
+
+  async handleGame() {
+    const { setUserInfoStore } = this.props;
+    const userToken = await getTriviaToken();
+    this.setState((state) => ({
+      ...state,
+      token: userToken.token,
+    }));
+    localStorage.setItem('token', userToken.token);
+    setUserInfoStore(this.state);
   }
 
   renderEmail() {
-    const { email } = this.state;
+    const { userEmail } = this.state;
 
     return (
       <label className="label" htmlFor="input-gravatar-email">
@@ -41,16 +49,16 @@ class Login extends React.Component {
         <input
           data-testid="input-gravatar-email"
           id="input-gravatar-email"
-          onChange={(e) => this.handleStateChange('email', e.target.value)}
+          onChange={(e) => this.handleStateChange('userEmail', e.target.value)}
           type="email"
-          value={email}
+          value={userEmail}
         />
       </label>
     );
   }
 
   renderName() {
-    const { name } = this.state;
+    const { userName } = this.state;
 
     return (
       <label className="label" htmlFor="input-player-name">
@@ -58,20 +66,22 @@ class Login extends React.Component {
         <input
           data-testid="input-player-name"
           id="input-player-name"
-          onChange={(e) => this.handleStateChange('name', e.target.value)}
+          onChange={(e) => this.handleStateChange('userName', e.target.value)}
           type="text"
-          value={name}
+          value={userName}
         />
       </label>
     );
   }
 
   renderButton() {
-    const { email, name } = this.state;
+    const { userName } = this.state;
+    const validEmail = this.validateEmail();
     return (
       <button
         data-testid="btn-play"
-        disabled={(!(email && name))}
+        disabled={!(validEmail && userName)}
+        onClick={() => this.handleGame()}
         type="button"
       >
         Jogar
@@ -80,31 +90,47 @@ class Login extends React.Component {
   }
 
   render() {
-    return (
-      <div className="login-form">
-        <div className="form">
-          <Link
-            className="label"
-            data-testid="btn-settings"
-            to="/settings"
-          >
-            Configurações
-          </Link>
-          <br />
-          <br />
-          {this.renderEmail()}
-          <br />
-          {this.renderName()}
-          <br />
-          {this.renderButton()}
+    const { userLogged } = this.props;
+    const renderComponent = !userLogged
+      ? (
+        <div className="login-form">
+          <div className="form">
+            <Link
+              className="label"
+              data-testid="btn-settings"
+              to="/settings"
+            >
+              Configurações
+            </Link>
+            <br />
+            <br />
+            {this.renderEmail()}
+            <br />
+            {this.renderName()}
+            <br />
+            {this.renderButton()}
+          </div>
         </div>
-      </div>
-    );
+      )
+      : (
+        <Redirect to="/game" />
+      );
+
+    return (renderComponent);
   }
 }
+
+Login.propTypes = {
+  setUserInfoStore: PropTypes.func.isRequired,
+  userLogged: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  userLogged: state.userInfo.isLogged,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   setUserInfoStore: (userData) => dispatch(setUserInfo(userData)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
