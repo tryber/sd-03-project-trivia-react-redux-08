@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import hashedMail from '../services/encrypt_mail';
 import PropTypes from 'prop-types';
+import hashedMail from '../services/encrypt_mail';
 import '../styles/Header.css';
 
 function Header(props) {
@@ -26,9 +26,9 @@ function Header(props) {
 }
 
 Header.prototype = {
-  userName: PropTypes.string,
-  userEmail: PropTypes.string,
-  score: PropTypes.number,
+  userName: PropTypes.string.isRequired,
+  userEmail: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
