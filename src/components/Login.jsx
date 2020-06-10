@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import { getTriviaToken } from '../services/endpoints_API';
 
 import setUserInfo from '../actions/actionsCreators';
 import '../styles/Login.css';
@@ -10,14 +12,10 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      email: '',
-      name: '',
+      userEmail: '',
+      userName: '',
+      token: '',
     };
-  }
-
-  submitData() {
-    const { email, name } = this.state;
-    console.log(email, name, 'were submited');
   }
 
   handleStateChange(field, value) {
@@ -27,22 +25,16 @@ class Login extends React.Component {
     }));
   }
 
-  requestToken() {
-    // request token to the api
-    const { name, email } = this.state;
-    console.log(name, email, 'foi eviada a requisição');
-  }
-
-  saveToken() {
-    // Save token to local storage
-  }
-
-  handlePlay() {
-    // fires the functions to start playing
+  async handleGame() {
+    const { setUserInfoStore } = this.props;
+    const token = await getTriviaToken().token;
+    this.setState((state) => ({ ...state, token }));
+    setUserInfoStore(this.state);
+    return <Redirect to="/game" />;
   }
 
   renderEmail() {
-    const { email } = this.state;
+    const { userEmail } = this.state;
 
     return (
       <label className="label" htmlFor="input-gravatar-email">
@@ -52,14 +44,14 @@ class Login extends React.Component {
           id="input-gravatar-email"
           onChange={(e) => this.handleStateChange('email', e.target.value)}
           type="email"
-          value={email}
+          value={userEmail}
         />
       </label>
     );
   }
 
   renderName() {
-    const { name } = this.state;
+    const { userName } = this.state;
 
     return (
       <label className="label" htmlFor="input-player-name">
@@ -69,19 +61,19 @@ class Login extends React.Component {
           id="input-player-name"
           onChange={(e) => this.handleStateChange('name', e.target.value)}
           type="text"
-          value={name}
+          value={userName}
         />
       </label>
     );
   }
 
   renderButton() {
-    const { email, name } = this.state;
+    const { userEmail, userName } = this.state;
     return (
       <button
         data-testid="btn-play"
-        disabled={(!(email && name))}
-        onClick={() => this.handlePlay()}
+        disabled={(!(userEmail && userName))}
+        onClick={() => this.handleGame()}
         type="button"
       >
         Jogar
@@ -112,6 +104,10 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  setUserInfoStore: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   setUserInfoStore: (userData) => dispatch(setUserInfo(userData)),
