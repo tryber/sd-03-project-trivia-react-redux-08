@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import hashedMail from '../services/encrypt_mail';
 import '../styles/Header.css';
 
-function Header({ userName, score, userEmail }) {
+function Header(props) {
+  const { userName, score, userEmail } = props;
   const hash = hashedMail(userEmail);
   return (
     <header className="header-feedback-and-game">
@@ -15,10 +16,7 @@ function Header({ userName, score, userEmail }) {
           alt={`${userName} avatar`}
           data-testid="header-profile-picture"
         />
-        <span className="player-name" data-testid="header-player-name">
-          Jogador:
-          {userName}
-        </span>
+        <span className="player-name" data-testid="header-player-name">Jogador: {userName}</span>
       </div>
       <div>
         <h3 className="player-score" data-testid="header-score">{`Placar:${score}`}</h3>
@@ -34,8 +32,7 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  userName: state.userInfo.userName,
-  userEmail: state.userInfo.userEmail,
+  data: state.triviaInfo.data,
 });
 
 export default connect(mapStateToProps)(Header);

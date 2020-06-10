@@ -20,7 +20,7 @@ class Game extends Component {
     const {
       getTriviaQuestions, categoryID, difficulty, type,
     } = this.props;
-    const token = localStorage.getItem('token');
+    const token = JSON.parse(localStorage.getItem('token'));
     getTriviaQuestions(token, categoryID, difficulty, type);
   }
 
@@ -34,8 +34,8 @@ class Game extends Component {
 
   render() {
     const { questionIndex } = this.state;
-    const { isLogged, triviaData } = this.props;
-    return isLogged ? (
+    const { loggedIn, triviaData } = this.props;
+    return loggedIn ? (
       <main>
         <Header />
         <TriviaCard data={triviaData[questionIndex]} />
@@ -57,13 +57,12 @@ Game.propTypes = {
   triviaData: PropTypes.arrayOf(PropTypes.object).isRequired,
   difficulty: PropTypes.string,
   getTriviaQuestions: PropTypes.func.isRequired,
-  isLogged: PropTypes.bool.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
   type: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
-  triviaData: state.triviaInfo.data,
-  isLogged: state.userInfo.isLogged,
+  data: state.triviaInfo.data,
 });
 
 const mapDispatchToProps = (dispatch) => ({
