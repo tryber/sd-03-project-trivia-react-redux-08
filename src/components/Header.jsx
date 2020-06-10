@@ -25,7 +25,7 @@ function Header(props) {
   );
 }
 
-Header.prototype = {
+Header.propTypes = {
   userName: PropTypes.string.isRequired,
   userEmail: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
