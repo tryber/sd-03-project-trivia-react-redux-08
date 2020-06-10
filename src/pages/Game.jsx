@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import fetchingTriviaQuestions from '../actions/actionsCreators';
 import hashedMail from '../services/encrypt_mail';
 import TriviaCard from '../components/TriviaCard';
 
 class Game extends Component {
+  componentDidMount() {
+    const {
+      getTriviaQuestions, categoryID, difficulty, type,
+    } = this.props;
+    const token = JSON.parse(localStorage.getItem('token'));
+    getTriviaQuestions(token, categoryID, difficulty, type);
+  }
+
   render() {
     const { user, score, email } = this.props;
     const hash = hashedMail(email);
@@ -24,10 +34,29 @@ class Game extends Component {
   }
 }
 
+Game.defaultProps = {
+  categoryID: '',
+  difficulty: '',
+  type: '',
+};
+
 Game.propTypes = {
+  categoryID: PropTypes.string,
+  difficulty: PropTypes.string,
   email: PropTypes.string.isRequired,
+  getTriviaQuestions: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
+  type: PropTypes.string,
   user: PropTypes.string.isRequired,
 };
 
-export default Game;
+const mapDispatchToProps = (dispatch) => ({
+  getTriviaQuestions: (
+    token,
+    categoryID,
+    difficulty,
+    type,
+  ) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
+});
+
+export default connect(null, mapDispatchToProps)(Game);

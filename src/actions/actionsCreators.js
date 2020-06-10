@@ -30,10 +30,7 @@ export function fetchingTriviaQuestions(token, categoryID, difficulty, type) {
       categoryID,
       difficulty,
       type,
-    ).then((questions) =>
-      dispatch(requestSucessful(questions), (error) =>
-        dispatch(requestFailed(error.message)),
-      ),
-    );
+    ).then((questions) => dispatch(requestSucessful(questions),
+      (error) => dispatch(requestFailed(error.message))));
   };
 }
