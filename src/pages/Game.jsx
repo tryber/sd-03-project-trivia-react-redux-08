@@ -34,7 +34,7 @@ class Game extends Component {
 
   render() {
     const { questionIndex } = this.state;
-    const { loggedIn = true, triviaData } = this.props;
+    const { loggedIn, triviaData } = this.props;
     return loggedIn ? (
       <main>
         <Header />
