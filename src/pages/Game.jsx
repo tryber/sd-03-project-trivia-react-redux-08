@@ -43,7 +43,7 @@ class Game extends Component {
   render() {
     const { questionIndex } = this.state;
     const {
-      userName, score, userEmail, loggedIn, triviaData,
+      userName, score, userEmail, loggedIn = true, triviaData,
     } = this.props;
     const hash = hashedMail(userEmail);
     return loggedIn ? (
