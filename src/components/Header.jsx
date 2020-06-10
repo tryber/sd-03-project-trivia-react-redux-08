@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import hashedMail from '../services/encrypt_mail';
+import PropTypes from 'prop-types';
 import '../styles/Header.css';
 
 function Header(props) {
@@ -23,6 +24,12 @@ function Header(props) {
     </div>
   );
 }
+
+Header.prototype = {
+  userName: PropTypes.string,
+  userEmail: PropTypes.string,
+  score: PropTypes.number,
+};
 
 const mapStateToProps = (state) => ({
   data: state.triviaInfo.data,
