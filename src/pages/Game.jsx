@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import fetchingTriviaQuestions from '../actions/actionsCreators';
+import { fetchingTriviaQuestions } from '../actions/actionsCreators';
 import hashedMail from '../services/encrypt_mail';
 import TriviaCard from '../components/TriviaCard';
 

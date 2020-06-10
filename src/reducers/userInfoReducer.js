@@ -1,4 +1,4 @@
-import SET_USER_LOGGIN from '../actions/actions';
+import { SET_USER_LOGGIN } from '../actions/actions';
 
 const initialInfo = {
   email: '',
