@@ -11,6 +11,7 @@ class Game extends Component {
     super(props);
 
     this.state = {
+      nextQuestion: false,
       questionIndex: 0,
       timer: 30,
       timerOn: false,
@@ -34,7 +35,7 @@ class Game extends Component {
   }
 
   render() {
-    const { questionIndex } = this.state;
+    const { questionIndex, nextQuestion } = this.state;
     const {
       userName, score, userEmail, isLogged, triviaData,
     } = this.props;
@@ -51,6 +52,7 @@ class Game extends Component {
           <span data-testid="header-score">{`Placar:${score}`}</span>
         </header>
         <TriviaCard data={triviaData[questionIndex]} />
+        {nextQuestion && <button type="button" data-test-id="btn-next">Próxima</button>}
       </main>
     ) : (
       <h1>
@@ -79,7 +81,7 @@ Game.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  data: state.triviaInfo.data,
+  triviaData: state.triviaInfo.data,
   isLogged: state.userInfo.isLogged,
 });
 
