@@ -1,0 +1,7 @@
+.header-feedback-and-game {
+  border: 1px red solid;
+  display: flex;
+  align-content: center;
+  width: 550px;
+  margin: 0 auto;
+}
