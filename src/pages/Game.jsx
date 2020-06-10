@@ -19,7 +19,8 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    const token = JSON.parse(localStorage.getItem('token'));
+    const token = localStorage.getItem('token');
+    console.log(token);
     const {
       getTriviaQuestions, categoryID, difficulty, type,
     } = this.props;
@@ -95,6 +96,7 @@ const mapStateToProps = (state) => ({
   userName: state.userInfo.userName,
   triviaData: state.triviaInfo.data,
   isLogged: state.userInfo.isLogged,
+  loading: state.triviaInfo.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
