@@ -19,10 +19,10 @@ class Game extends Component {
   }
 
   componentDidMount() {
+    const token = JSON.parse(localStorage.getItem('token'));
     const {
       getTriviaQuestions, categoryID, difficulty, type,
     } = this.props;
-    const token = JSON.parse(localStorage.getItem('token'));
     getTriviaQuestions(token, categoryID, difficulty, type);
   }
 
@@ -37,24 +37,33 @@ class Game extends Component {
   render() {
     const { questionIndex, nextQuestion } = this.state;
     const {
-      userName, score, userEmail, isLogged, triviaData,
+      name, score, email, isLogged, loading, triviaData,
     } = this.props;
-    const hash = hashedMail(userEmail);
-    return isLogged ? (
-      <main>
-        <header>
-          <img
-            src={`https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`}
-            alt={`${userName} avatar`}
-            data-testid="header-profile-picture"
-          />
-          <span data-testid="header-player-name">{userName}</span>
-          <span data-testid="header-score">{`Placar:${score}`}</span>
-        </header>
-        <TriviaCard data={triviaData[questionIndex]} />
-        {nextQuestion && <button type="button" data-test-id="btn-next">Próxima</button>}
-      </main>
-    ) : (
+    const hash = hashedMail(email);
+    if (isLogged) {
+      return loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <main>
+          <header>
+            <img
+              src={`https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`}
+              alt={`${name} avatar`}
+              data-testid="header-profile-picture"
+            />
+            <span data-testid="header-player-name">{name}</span>
+            <span data-testid="header-score">{`Placar:${score}`}</span>
+          </header>
+          <TriviaCard data={triviaData[questionIndex]} />
+          {nextQuestion && (
+            <button type="button" data-test-id="btn-next">
+              Próxima
+            </button>
+          )}
+        </main>
+      );
+    }
+    return (
       <h1>
         <Link to="/">Oops! Please, log to play!</Link>
       </h1>
@@ -74,22 +83,22 @@ Game.propTypes = {
   difficulty: PropTypes.string,
   getTriviaQuestions: PropTypes.func.isRequired,
   isLogged: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   score: PropTypes.number.isRequired,
   type: PropTypes.string,
-  userEmail: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  email: state.userInfo.email,
+  name: state.userInfo.name,
   triviaData: state.triviaInfo.data,
   isLogged: state.userInfo.isLogged,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTriviaQuestions: (token,
-    categoryID,
-    difficulty,
-    type) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
+  getTriviaQuestions: (token, categoryID, difficulty, type) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
