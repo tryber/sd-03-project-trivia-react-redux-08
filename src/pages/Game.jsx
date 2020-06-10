@@ -76,7 +76,7 @@ Game.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  data: state.triviaInfoReducer.data,
+  data: state.triviaInfo.data,
 });
 
 const mapDispatchToProps = (dispatch) => ({

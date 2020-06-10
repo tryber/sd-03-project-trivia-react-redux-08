@@ -1,7 +1,21 @@
 .header-feedback-and-game {
-  border: 1px red solid;
+  background-color: grey;
+  border: 2px black solid;
   display: flex;
-  align-content: center;
-  width: 550px;
+  height: 40px;
+  justify-content: space-between;
   margin: 0 auto;
+}
+
+.img-from-gravatar {
+  width: 35px;
+  border-radius: 50%;
+}
+
+.player-score {
+  margin-bottom: 200px;
+}
+
+.player-name {
+  font-size: 22px;
 }
