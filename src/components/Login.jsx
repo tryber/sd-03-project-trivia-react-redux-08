@@ -25,11 +25,19 @@ class Login extends React.Component {
     }));
   }
 
+  validadeEmail() {
+    const { userEmail } = this.state;
+    return /^[a-zA-Z0-9]+@[a-zA-Z0-9]+.[A-Za-z]+$/.test(userEmail);
+  }
+
   async handleGame() {
     const { setUserInfoStore } = this.props;
-    const token = await getTriviaToken().token;
-    this.setState((state) => ({ ...state, token }));
-    // set local storage
+    const userToken = await getTriviaToken();
+    this.setState((state) => ({
+      ...state,
+      token: userToken.token,
+    }));
+    // implement set local storage
     setUserInfoStore(this.state);
     return <Redirect to="/game" />;
   }
@@ -43,7 +51,7 @@ class Login extends React.Component {
         <input
           data-testid="input-gravatar-email"
           id="input-gravatar-email"
-          onChange={(e) => this.handleStateChange('email', e.target.value)}
+          onChange={(e) => this.handleStateChange('userEmail', e.target.value)}
           type="email"
           value={userEmail}
         />
@@ -60,7 +68,7 @@ class Login extends React.Component {
         <input
           data-testid="input-player-name"
           id="input-player-name"
-          onChange={(e) => this.handleStateChange('name', e.target.value)}
+          onChange={(e) => this.handleStateChange('userName', e.target.value)}
           type="text"
           value={userName}
         />
@@ -69,11 +77,12 @@ class Login extends React.Component {
   }
 
   renderButton() {
-    const { userEmail, userName } = this.state;
+    const { userName } = this.state;
+    const validEmail = this.validadeEmail();
     return (
       <button
         data-testid="btn-play"
-        disabled={(!(userEmail && userName))}
+        disabled={!(validEmail && userName)}
         onClick={() => this.handleGame()}
         type="button"
       >
