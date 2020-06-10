@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchingTriviaQuestions } from '../actions/actionsCreators';
 import hashedMail from '../services/encrypt_mail';
@@ -35,10 +36,10 @@ class Game extends Component {
   render() {
     const { questionIndex } = this.state;
     const {
-      userName, score, userEmail, loggedIn = true, triviaData,
+      userName, score, userEmail, isLogged, triviaData,
     } = this.props;
     const hash = hashedMail(userEmail);
-    return loggedIn ? (
+    return isLogged ? (
       <main>
         <header>
           <img
@@ -52,7 +53,9 @@ class Game extends Component {
         <TriviaCard data={triviaData[questionIndex]} />
       </main>
     ) : (
-      <h1>Oops! Please, log to play!</h1>
+      <h1>
+        <Link to="/">Oops! Please, log to play!</Link>
+      </h1>
     );
   }
 }
@@ -68,7 +71,7 @@ Game.propTypes = {
   triviaData: PropTypes.arrayOf(PropTypes.object).isRequired,
   difficulty: PropTypes.string,
   getTriviaQuestions: PropTypes.func.isRequired,
-  loggedIn: PropTypes.bool.isRequired,
+  isLogged: PropTypes.bool.isRequired,
   score: PropTypes.number.isRequired,
   type: PropTypes.string,
   userEmail: PropTypes.string.isRequired,
@@ -76,7 +79,8 @@ Game.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  data: state.triviaInfoReducer.data,
+  data: state.triviaInfo.data,
+  isLogged: state.userInfo.isLogged,
 });
 
 const mapDispatchToProps = (dispatch) => ({
