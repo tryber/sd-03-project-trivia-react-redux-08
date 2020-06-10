@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import { getTriviaToken } from '../services/endpoints_API';
 
-import setUserInfo from '../actions/actionsCreators';
+import { getTriviaToken } from '../services/endpoints_API';
+import { setUserInfo } from '../actions/actionsCreators';
 import '../styles/Login.css';
 
 class Login extends React.Component {

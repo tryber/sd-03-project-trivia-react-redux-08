@@ -1,4 +1,7 @@
-// export default to be changed
-const SET_USER_LOGGIN = 'USER_INFO';
+export const REQUEST_TRIVIA_QUESTIONS = 'REQUEST_TRIVIA_QUESTIONS';
 
-export default SET_USER_LOGGIN;
+export const QUESTIONS_REQUEST_SUCESS = 'QUESTIONS_REQUEST_SUCESS';
+
+export const QUESTIONS_REQUEST_FAILURE = 'QUESTIONS_REQUEST_FAILURE';
+// export default to be changed
+export const SET_USER_LOGGIN = 'USER_INFO';
