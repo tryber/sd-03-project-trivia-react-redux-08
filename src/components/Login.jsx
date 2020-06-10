@@ -91,35 +91,48 @@ class Login extends React.Component {
   }
 
   render() {
-    return (
-      <div className="login-form">
-        <div className="form">
-          <Link
-            className="label"
-            data-testid="btn-settings"
-            to="/settings"
-          >
-            Configurações
-          </Link>
-          <br />
-          <br />
-          {this.renderEmail()}
-          <br />
-          {this.renderName()}
-          <br />
-          {this.renderButton()}
+    const { userLogged } = this.props;
+    console.log(userLogged)
+    const renderComponent = !userLogged
+      ? (
+        <div className="login-form">
+          <div className="form">
+            <Link
+              className="label"
+              data-testid="btn-settings"
+              to="/settings"
+            >
+              Configurações
+            </Link>
+            <br />
+            <br />
+            {this.renderEmail()}
+            <br />
+            {this.renderName()}
+            <br />
+            {this.renderButton()}
+          </div>
         </div>
-      </div>
-    );
+      )
+      : (
+        <Redirect to="/game" />
+      );
+
+    return (renderComponent);
   }
 }
 
 Login.propTypes = {
   setUserInfoStore: PropTypes.func.isRequired,
+  userLogged: PropTypes.bool.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  userLogged: state.userInfo.isLogged,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   setUserInfoStore: (userData) => dispatch(setUserInfo(userData)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
