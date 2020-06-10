@@ -37,9 +37,8 @@ class Login extends React.Component {
       ...state,
       token: userToken.token,
     }));
-    localStorage.setItem('token', `${userToken.token}`);
+    localStorage.setItem('token', userToken.token);
     setUserInfoStore(this.state);
-    return <Redirect to="/game" />;
   }
 
   renderEmail() {
