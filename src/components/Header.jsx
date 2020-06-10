@@ -8,7 +8,7 @@ function Header(props) {
   const { userName, score, userEmail } = props;
   const hash = hashedMail(userEmail);
   return (
-    <div className="header-feedback-and-game">
+    <header className="header-feedback-and-game">
       <div>
         <img
           className="img-from-gravatar"
@@ -21,7 +21,7 @@ function Header(props) {
       <div>
         <h3 className="player-score" data-testid="header-score">{`Placar:${score}`}</h3>
       </div>
-    </div>
+    </header>
   );
 }
 
