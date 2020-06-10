@@ -2,6 +2,7 @@ import {
   REQUEST_TRIVIA_QUESTIONS,
   QUESTIONS_REQUEST_SUCESS,
   QUESTIONS_REQUEST_FAILURE,
+  SET_USER_LOGGIN,
 } from './actions';
 import { getTriviaQuestions } from '../services/endpoints_API';
 
@@ -34,3 +35,7 @@ export function fetchingTriviaQuestions(token, categoryID, difficulty, type) {
       (error) => dispatch(requestFailed(error.message))));
   };
 }
+export const setUserInfo = (data) => ({
+  type: SET_USER_LOGGIN,
+  data,
+});
