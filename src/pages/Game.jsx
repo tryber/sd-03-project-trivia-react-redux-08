@@ -98,7 +98,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTriviaQuestions: (token, categoryID, difficulty, type) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
+  getTriviaQuestions: (token,
+    categoryID,
+    difficulty,
+    type) => dispatch(fetchingTriviaQuestions(token,
+    categoryID,
+    difficulty,
+    type)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
