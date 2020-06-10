@@ -58,10 +58,7 @@ Game.propTypes = {
   difficulty: PropTypes.string,
   getTriviaQuestions: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool.isRequired,
-  score: PropTypes.number.isRequired,
   type: PropTypes.string,
-  userEmail: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
