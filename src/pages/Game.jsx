@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchingTriviaQuestions } from '../actions/actionsCreators';
-import hashedMail from '../services/encrypt_mail';
 import TriviaCard from '../components/TriviaCard';
+import Header from '../components/Header';
 
 class Game extends Component {
   constructor(props) {
@@ -34,21 +34,10 @@ class Game extends Component {
 
   render() {
     const { questionIndex } = this.state;
-    const {
-      userName, score, userEmail, loggedIn = true, triviaData,
-    } = this.props;
-    const hash = hashedMail(userEmail);
+    const { loggedIn = true, triviaData } = this.props;
     return loggedIn ? (
       <main>
-        <header>
-          <img
-            src={`https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`}
-            alt={`${userName} avatar`}
-            data-testid="header-profile-picture"
-          />
-          <span data-testid="header-player-name">{userName}</span>
-          <span data-testid="header-score">{`Placar:${score}`}</span>
-        </header>
+        <Header />
         <TriviaCard data={triviaData[questionIndex]} />
       </main>
     ) : (
