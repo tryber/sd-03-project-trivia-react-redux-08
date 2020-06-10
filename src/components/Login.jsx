@@ -92,7 +92,6 @@ class Login extends React.Component {
 
   render() {
     const { userLogged } = this.props;
-    console.log(userLogged)
     const renderComponent = !userLogged
       ? (
         <div className="login-form">
