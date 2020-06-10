@@ -33,14 +33,6 @@ class Login extends React.Component {
     console.log(name, email, 'foi eviada a requisição');
   }
 
-  saveToken() {
-    // Save token to local storage
-  }
-
-  handlePlay() {
-    // fires the functions to start playing
-  }
-
   renderEmail() {
     const { email } = this.state;
 
