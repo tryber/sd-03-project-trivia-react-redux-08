@@ -37,9 +37,9 @@ class Game extends Component {
   render() {
     const { questionIndex, nextQuestion } = this.state;
     const {
-      name, score, email, isLogged, loading, triviaData,
+      userName, score, userEmail, isLogged, loading, triviaData,
     } = this.props;
-    const hash = hashedMail(email);
+    const hash = hashedMail(userEmail);
     if (isLogged) {
       return loading ? (
         <h1>Loading...</h1>
@@ -48,10 +48,10 @@ class Game extends Component {
           <header>
             <img
               src={`https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`}
-              alt={`${name} avatar`}
+              alt={`${userName} avatar`}
               data-testid="header-profile-picture"
             />
-            <span data-testid="header-player-name">{name}</span>
+            <span data-testid="header-player-userName">{userName}</span>
             <span data-testid="header-score">{`Placar:${score}`}</span>
           </header>
           <TriviaCard data={triviaData[questionIndex]} />
@@ -86,13 +86,13 @@ Game.propTypes = {
   loading: PropTypes.bool.isRequired,
   score: PropTypes.number.isRequired,
   type: PropTypes.string,
-  email: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  userEmail: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  email: state.userInfo.email,
-  name: state.userInfo.name,
+  userEmail: state.userInfo.userEmail,
+  userName: state.userInfo.userName,
   triviaData: state.triviaInfo.data,
   isLogged: state.userInfo.isLogged,
 });
