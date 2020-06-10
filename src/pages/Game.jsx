@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchingTriviaQuestions } from '../actions/actionsCreators';
-import hashedMail from '../services/encrypt_mail';
 import TriviaCard from '../components/TriviaCard';
+import Header from '../components/Header';
 
 class Game extends Component {
   constructor(props) {
@@ -38,23 +38,14 @@ class Game extends Component {
   render() {
     const { questionIndex, nextQuestion } = this.state;
     const {
-      userName, score, userEmail, isLogged, loading, triviaData,
+      isLogged, loading, triviaData,
     } = this.props;
-    const hash = hashedMail(userEmail);
     if (isLogged) {
       return loading ? (
         <h1>Loading...</h1>
       ) : (
         <main>
-          <header>
-            <img
-              src={`https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`}
-              alt={`${userName} avatar`}
-              data-testid="header-profile-picture"
-            />
-            <span data-testid="header-player-userName">{userName}</span>
-            <span data-testid="header-score">{`Placar:${score}`}</span>
-          </header>
+          <Header />
           <TriviaCard data={triviaData[questionIndex]} />
           {nextQuestion && (
             <button type="button" data-test-id="btn-next">
@@ -85,10 +76,7 @@ Game.propTypes = {
   getTriviaQuestions: PropTypes.func.isRequired,
   isLogged: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  score: PropTypes.number.isRequired,
   type: PropTypes.string,
-  userEmail: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
