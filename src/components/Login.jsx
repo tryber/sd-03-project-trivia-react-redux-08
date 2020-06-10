@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import setUserInfo from '../actions/actionsCreators';
 import '../styles/Login.css';
 
 class Login extends React.Component {
@@ -21,6 +25,12 @@ class Login extends React.Component {
       ...state,
       [field]: value,
     }));
+  }
+
+  requestToken() {
+    // request token to the api
+    const { name, email } = this.state;
+    console.log(name, email, 'foi eviada a requisição');
   }
 
   renderEmail() {
@@ -74,6 +84,15 @@ class Login extends React.Component {
     return (
       <div className="login-form">
         <div className="form">
+          <Link
+            className="label"
+            data-testid="btn-settings"
+            to="/settings"
+          >
+            Configurações
+          </Link>
+          <br />
+          <br />
           {this.renderEmail()}
           <br />
           {this.renderName()}
@@ -85,4 +104,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setUserInfoStore: (userData) => dispatch(setUserInfo(userData)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
