@@ -12,6 +12,7 @@ class Game extends Component {
     this.state = {
       questionIndex: 0,
       timer: 30,
+      timerOn: false,
     };
   }
 
@@ -23,9 +24,18 @@ class Game extends Component {
     getTriviaQuestions(token, categoryID, difficulty, type);
   }
 
+  updateQuestionIndex() {
+    const { questionIndex } = this.state;
+    const { triviaData } = this.props;
+    this.setState((state) => (questionIndex < triviaData.length
+      ? { questionIndex: state.questionIndex + 1 }
+      : { questionIndex: 0 }));
+  }
+
   render() {
+    const { questionIndex } = this.state;
     const {
-      userName, score, userEmail, loggedIn,
+      userName, score, userEmail, loggedIn, triviaData,
     } = this.props;
     const hash = hashedMail(userEmail);
     return loggedIn ? (
@@ -39,7 +49,7 @@ class Game extends Component {
           <span data-testid="header-player-name">{userName}</span>
           <span data-testid="header-score">{`Placar:${score}`}</span>
         </header>
-        <TriviaCard />
+        <TriviaCard data={triviaData[questionIndex]} />
       </main>
     ) : (
       <h1>Oops! Please, log to play!</h1>
@@ -55,6 +65,7 @@ Game.defaultProps = {
 
 Game.propTypes = {
   categoryID: PropTypes.string,
+  triviaData: PropTypes.arrayOf(PropTypes.object).isRequired,
   difficulty: PropTypes.string,
   getTriviaQuestions: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool.isRequired,
@@ -64,6 +75,10 @@ Game.propTypes = {
   userName: PropTypes.string.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  data: state.triviaInfoReducer.data,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   getTriviaQuestions: (token,
     categoryID,
@@ -71,4 +86,4 @@ const mapDispatchToProps = (dispatch) => ({
     type) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
 });
 
-export default connect(null, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
