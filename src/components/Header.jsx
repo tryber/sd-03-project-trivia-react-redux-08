@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import hashedMail from '../services/encrypt_mail';
-import '../styles/Header.css'
+import '../styles/Header.css';
 
 function Header(props) {
   const { userName, score, userEmail } = props;
@@ -25,7 +25,7 @@ function Header(props) {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.triviaInfo.data
-})
+  data: state.triviaInfo.data,
+});
 
 export default connect(mapStateToProps)(Header);
