@@ -1,9 +1,9 @@
 import { SET_USER_LOGGIN } from '../actions/actions';
 
 const initialInfo = {
-  email: '',
-  name: '',
+  userEmail: '',
   isLogged: false,
+  userName: '',
   token: '',
 };
 
@@ -12,9 +12,7 @@ const userInfoReducer = (state = initialInfo, action) => {
   switch (type) {
     case SET_USER_LOGGIN:
       return {
-        ...state,
-        email: data.email,
-        name: data.name,
+        ...data,
         isLogged: true,
       };
 
