@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import setUserInfo from '../actions/actionsCreators';
 import '../styles/Login.css';
 
 class Login extends React.Component {
@@ -97,4 +98,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setUserInfoStore: (userData) => dispatch(setUserInfo(userData)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
