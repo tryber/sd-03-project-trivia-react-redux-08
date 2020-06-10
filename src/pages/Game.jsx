@@ -32,13 +32,13 @@ class Game extends Component {
       : { questionIndex: 0 }));
   }
 
-  timerStarter() 
-    const { timer } = this.state;
-    const startedTimer = setTimeout(() => {
-      this.setState((state) => ({timer: state.timer - 1}))
-    }, 1000);
-    return timer <= 30 && timer > 0 ?
-  }
+  // timerStarter() {
+  //   const { timer } = this.state;
+  //   const startedTimer = setTimeout(() => {
+  //     this.setState((state) => ({timer: state.timer - 1}))
+  //   }, 1000);
+  //   return timer <= 30 && timer > 0 ?
+  // }
 
   render() {
     const { questionIndex } = this.state;
