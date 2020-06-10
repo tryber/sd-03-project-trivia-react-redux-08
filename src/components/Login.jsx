@@ -29,6 +29,7 @@ class Login extends React.Component {
     const { setUserInfoStore } = this.props;
     const token = await getTriviaToken().token;
     this.setState((state) => ({ ...state, token }));
+    // set local storage
     setUserInfoStore(this.state);
     return <Redirect to="/game" />;
   }
