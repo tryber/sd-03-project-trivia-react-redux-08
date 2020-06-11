@@ -2,7 +2,10 @@ import {
   REQUEST_TRIVIA_QUESTIONS,
   QUESTIONS_REQUEST_SUCESS,
   QUESTIONS_REQUEST_FAILURE,
-  SET_USER_LOGGIN,
+  SET_USER_LOGIN,
+  CORRECT_ANSWER,
+  WRONG_ANSWER,
+  RESET_GAME,
 } from './actions';
 import { getTriviaQuestions } from '../services/endpoints_API';
 
@@ -36,6 +39,20 @@ export function fetchingTriviaQuestions(token, categoryID, difficulty, type) {
   };
 }
 export const setUserInfo = (data) => ({
-  type: SET_USER_LOGGIN,
+  type: SET_USER_LOGIN,
   data,
+});
+
+export const correctAnswer = (score, assertions) => ({
+  type: CORRECT_ANSWER,
+  score,
+  assertions,
+});
+
+export const wrongAnswer = () => ({
+  type: WRONG_ANSWER,
+});
+
+export const resetGame = () => ({
+  type: RESET_GAME,
 });

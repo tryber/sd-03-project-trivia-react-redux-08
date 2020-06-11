@@ -16,10 +16,12 @@ class Game extends Component {
       timer: 30,
       timerOn: false,
     };
+
+    this.updateQuestionIndex=this.updateQuestionIndex.bind(this);
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('token');
+    const token = JSON.parse(localStorage.getItem('token'));
     console.log(token);
     const {
       getTriviaQuestions, categoryID, difficulty, type,
@@ -30,9 +32,10 @@ class Game extends Component {
   updateQuestionIndex() {
     const { questionIndex } = this.state;
     const { triviaData } = this.props;
-    this.setState((state) => (questionIndex < triviaData.length
-      ? { questionIndex: state.questionIndex + 1 }
-      : { questionIndex: 0 }));
+    if (questionIndex < triviaData.length) {
+      return this.setState(({questionIndex}) => ({ questionIndex: questionIndex +1}))
+    }
+    
   }
 
   render() {
@@ -48,7 +51,7 @@ class Game extends Component {
           <Header />
           <TriviaCard data={triviaData[questionIndex]} />
           {nextQuestion && (
-            <button type="button" data-test-id="btn-next">
+            <button type="button" data-test-id="btn-next" onClick={}>
               Próxima
             </button>
           )}
