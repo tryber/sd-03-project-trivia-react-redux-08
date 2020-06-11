@@ -64,11 +64,11 @@ class Game extends Component {
     const { triviaData } = this.props;
     switch (triviaData[questionIndex].difficulty) {
       case 'easy':
-        return 10 + timer * 1 + prevScore;
+        return (10 + (timer * 1) + prevScore);
       case 'medium':
-        return 10 + timer * 2 + prevScore;
+        return (10 + (timer * 2) + prevScore);
       case 'hard':
-        return 10 + timer * 3 + prevScore;
+        return (10 + (timer * 3) + prevScore);
       default:
         return 0;
     }
