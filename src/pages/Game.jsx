@@ -23,7 +23,8 @@ function updatePlayerInfo(score, assertions, name, email) {
       gravatarEmail: email,
     },
   };
-  return localStorage.setItem('state', JSON.stringify(state));
+  const stringfyState = JSON.stringify(state);
+  localStorage.setItem('state', stringfyState);
 }
 
 class Game extends Component {
