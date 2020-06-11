@@ -15,3 +15,7 @@ export const RESET_GAME = 'RESET_GAME';
 export const TIME_OUT = 'TIME_OUT';
 
 export const NEXT_QUESTION = 'const NEXT_QUESTION';
+
+export const SET_TIMER = 'SET_TIMER';
+
+export const RESET_TIMER = 'RESET_TIMER';

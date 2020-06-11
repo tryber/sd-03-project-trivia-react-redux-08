@@ -8,6 +8,8 @@ import {
   RESET_GAME,
   TIME_OUT,
   NEXT_QUESTION,
+  SET_TIMER,
+  RESET_TIMER,
 } from './actions';
 import { getTriviaQuestions } from '../services/endpoints_API';
 
@@ -65,4 +67,12 @@ export const timeOut = () => ({
 
 export const nextQuestion = () => ({
   type: NEXT_QUESTION,
+});
+
+export const setTimer = () => ({
+  type: SET_TIMER,
+});
+
+export const resetTimer = () => ({
+  type: RESET_TIMER,
 });

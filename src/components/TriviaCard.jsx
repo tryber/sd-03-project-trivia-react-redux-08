@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shuffleQuestions from '../services/shuffleQuestions';
+import Timer from './Timer';
 
 const answers = ({
   correct_answer: correctAnswer,
@@ -54,6 +55,9 @@ const TriviaCard = ({
             {answer}
           </button>
         )))}
+      <div>
+        <Timer />
+      </div>
     </section>
   );
 };

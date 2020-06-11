@@ -12,16 +12,16 @@ class Timer extends Component {
   }
 
   componentDidMount() {
+    const { seconds } = this.state;
+    const { questionAnswered } = this.props;
     this.setTimer = setInterval(() => {
-      const { seconds } = this.state;
-
-      if (seconds <= 30) {
+      if (seconds <= 30 && seconds > 0 && questionAnswered) {
         this.setState((state) => ({
           seconds: state.seconds - 1,
         }));
       }
 
-      if (seconds === 1) {
+      if (seconds === 0 && !questionAnswered) {
         clearInterval(this.setTimer);
       }
     }, 1000);
@@ -29,6 +29,10 @@ class Timer extends Component {
 
   componentWillUnmount() {
     clearInterval(this.setTimer);
+  }
+
+  handleTimer() {
+    
   }
 
   render() {
@@ -45,9 +49,13 @@ class Timer extends Component {
   }
 }
 
-Timer.propTypes = {};
+Timer.propTypes = {
+  questionAnswered: PropTypes.bool.isRequired,
+};
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  questionAnswered: state.gameInfo.answered,
+});
 
 const mapDispatchToProps = {};
 
