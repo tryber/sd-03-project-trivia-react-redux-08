@@ -13,7 +13,9 @@ const answers = ({
 const findCorrectAnswer = (array, { correct_answer: correctAnswer }) => array
   .find((item) => item === correctAnswer);
 
-const TriviaCard = ({ data, disabled, onCorrect, onWrong }) => {
+const TriviaCard = ({
+  data, disabled, onCorrect, onWrong,
+}) => {
   const randomTriviaAnswers = shuffleQuestions(answers(data));
   return (
     <section>
@@ -30,8 +32,8 @@ const TriviaCard = ({ data, disabled, onCorrect, onWrong }) => {
         {data.difficulty}
       </p>
       <p data-testid="question-text">{data.question}</p>
-      {randomTriviaAnswers.map((answer, index) =>
-        answer === findCorrectAnswer(randomTriviaAnswers, data) ? (
+      {randomTriviaAnswers
+        .map((answer, index) => (answer === findCorrectAnswer(randomTriviaAnswers, data) ? (
           <button
             type="button"
             data-testid="correct-answer"
@@ -51,8 +53,7 @@ const TriviaCard = ({ data, disabled, onCorrect, onWrong }) => {
           >
             {answer}
           </button>
-        ),
-      )}
+        )))}
     </section>
   );
 };
