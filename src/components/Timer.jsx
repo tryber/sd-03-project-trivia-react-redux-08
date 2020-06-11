@@ -5,7 +5,15 @@ import { setTimer, timeOut } from '../actions/actionsCreators';
 
 class Timer extends Component {
   componentDidMount() {
-    this.timerOn = setInterval(() => {
+    this.handleTimer();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerOn);
+  }
+
+  handleTimer() {
+    setInterval(() => {
       const {
         questionAnswered, seconds, startTimer, endTimer,
       } = this.props;
@@ -22,10 +30,6 @@ class Timer extends Component {
       }
       return false;
     }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerOn);
   }
 
   render() {

@@ -7,6 +7,7 @@ import {
   correctAnswer,
   wrongAnswer,
   nextQuestion,
+  resetTimer,
 } from '../actions/actionsCreators';
 import Header from '../components/Header';
 import TriviaCard from '../components/TriviaCard';
@@ -31,10 +32,11 @@ class Game extends Component {
 
     this.state = {
       questionIndex: 0,
-      timer: 30,
     };
 
-    this.updateQuestionIndex = this.updateQuestionIndex.bind(this);
+    this.updateQuestionIndexAndTimer = this.updateQuestionIndexAndTimer.bind(
+      this,
+    );
     this.clickOnCorrect = this.clickOnCorrect.bind(this);
     this.clickOnWrong = this.clickOnWrong.bind(this);
   }
@@ -55,27 +57,29 @@ class Game extends Component {
     getTriviaQuestions(token, categoryID, difficulty, type);
   }
 
-  updateQuestionIndex() {
+  updateQuestionIndexAndTimer() {
     const { questionIndex } = this.state;
-    const { triviaData, nextTriviaCard } = this.props;
+    const { triviaData, nextTriviaCard, updateTimer } = this.props;
     if (questionIndex < triviaData.length) {
       this.setState((state) => ({ questionIndex: state.questionIndex + 1 }));
+      updateTimer();
       return nextTriviaCard();
     }
+    updateTimer();
     nextTriviaCard();
     return this.setState({ questionIndex: 0 });
   }
 
   updateScore(prevScore) {
-    const { questionIndex, timer } = this.state;
-    const { triviaData } = this.props;
+    const { questionIndex } = this.state;
+    const { triviaData, answerTime } = this.props;
     switch (triviaData[questionIndex].difficulty) {
       case 'easy':
-        return (10 + (timer * 1) + prevScore);
+        return 10 + (answerTime * 1) + prevScore;
       case 'medium':
-        return (10 + (timer * 2) + prevScore);
+        return 10 + (answerTime * 2) + prevScore;
       case 'hard':
-        return (10 + (timer * 3) + prevScore);
+        return 10 + (answerTime * 3) + prevScore;
       default:
         return 0;
     }
@@ -116,7 +120,7 @@ class Game extends Component {
           {answeredQuestion && (
             <NextButton
               condition={questionIndex === triviaData.length - 1}
-              onClick={this.updateQuestionIndex}
+              onClick={this.updateQuestionIndexAndTimer}
             />
           )}
           <Timer />
@@ -152,7 +156,9 @@ Game.propTypes = {
   correctOption: PropTypes.func.isRequired,
   wrongOption: PropTypes.func.isRequired,
   nextTriviaCard: PropTypes.func.isRequired,
+  updateTimer: PropTypes.func.isRequired,
   answeredQuestion: PropTypes.bool.isRequired,
+  answerTime: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -164,6 +170,7 @@ const mapStateToProps = (state) => ({
   score: state.gameInfo.score,
   assertions: state.gameInfo.assertions,
   answeredQuestion: state.gameInfo.answered,
+  answerTime: state.timerInfo.timer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -177,6 +184,7 @@ const mapDispatchToProps = (dispatch) => ({
   correctOption: (score, assertions) => dispatch(correctAnswer(score, assertions)),
   wrongOption: () => dispatch(wrongAnswer()),
   nextTriviaCard: () => dispatch(nextQuestion()),
+  updateTimer: () => dispatch(resetTimer()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
