@@ -127,11 +127,7 @@ class Game extends Component {
         </main>
       );
     }
-    return (
-      <h1>
-        <Link to="/">Oops! Please, log to play!</Link>
-      </h1>
-    );
+    return (<h1><Link to="/">Oops! Please, log to play!</Link></h1>);
   }
 }
 
