@@ -34,9 +34,12 @@ class Game extends Component {
     const { questionIndex } = this.state;
     const { triviaData } = this.props;
     if (questionIndex < triviaData.length) {
-      return this.setState((state) => ({ questionIndex: state.questionIndex + 1 }));
+      return this.setState((state) => ({
+        questionIndex: state.questionIndex + 1,
+        nextQuestion: true,
+      }));
     }
-    return this.setState({ questionIndex: 0 });
+    return this.setState({ questionIndex: 0, nextQuestion: false });
   }
 
   calculateScore() {
