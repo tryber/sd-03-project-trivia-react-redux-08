@@ -11,3 +11,7 @@ export const CORRECT_ANSWER = 'CORRECT_ANSWER';
 export const WRONG_ANSWER = 'WRONG_ANSWER';
 
 export const RESET_GAME = 'RESET_GAME';
+
+export const TIME_OUT = 'TIME_OUT';
+
+export const NEXT_QUESTION = 'const NEXT_QUESTION';

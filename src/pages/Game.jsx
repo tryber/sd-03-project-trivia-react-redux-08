@@ -6,10 +6,12 @@ import {
   fetchingTriviaQuestions,
   correctAnswer,
   wrongAnswer,
+  nextQuestion,
 } from '../actions/actionsCreators';
 import Header from '../components/Header';
 import TriviaCard from '../components/TriviaCard';
 import NextButton from '../components/NextButton';
+import Timer from '../components/Timer';
 
 function updatePlayerInfo(score, assertions, name, email) {
   const state = {
@@ -20,7 +22,7 @@ function updatePlayerInfo(score, assertions, name, email) {
       gravatarEmail: email,
     },
   };
-  localStorage.setItem('state', JSON.stringify(state));
+  return localStorage.setItem('state', JSON.stringify(state));
 }
 
 class Game extends Component {
@@ -28,10 +30,8 @@ class Game extends Component {
     super(props);
 
     this.state = {
-      nextQuestion: false,
       questionIndex: 0,
       timer: 30,
-      timerOn: false,
     };
 
     this.updateQuestionIndex = this.updateQuestionIndex.bind(this);
@@ -42,21 +42,28 @@ class Game extends Component {
   componentDidMount() {
     const token = JSON.parse(localStorage.getItem('token'));
     const {
-      getTriviaQuestions, categoryID, difficulty, type,
+      getTriviaQuestions,
+      categoryID,
+      difficulty,
+      type,
+      score,
+      assertions,
+      userName,
+      userEmail,
     } = this.props;
+    updatePlayerInfo(score, assertions, userName, userEmail);
     getTriviaQuestions(token, categoryID, difficulty, type);
   }
 
   updateQuestionIndex() {
     const { questionIndex } = this.state;
-    const { triviaData } = this.props;
+    const { triviaData, nextTriviaCard } = this.props;
     if (questionIndex < triviaData.length) {
-      return this.setState((state) => ({
-        questionIndex: state.questionIndex + 1,
-        nextQuestion: false,
-      }));
+      this.setState((state) => ({ questionIndex: state.questionIndex + 1 }));
+      return nextTriviaCard();
     }
-    return this.setState({ questionIndex: 0, nextQuestion: false });
+    nextTriviaCard();
+    return this.setState({ questionIndex: 0 });
   }
 
   updateScore(prevScore) {
@@ -81,20 +88,18 @@ class Game extends Component {
     const updatedScore = this.updateScore(score);
     const updatedAssertions = assertions + 1;
     updatePlayerInfo(updatedScore, updatedAssertions, userName, userEmail);
-    this.setState((state) => ({ nextQuestion: !state.nextQuestion }));
     return correctOption(updatedScore, updatedAssertions);
   }
 
   clickOnWrong() {
     const { wrongOption } = this.props;
-    this.setState((state) => ({ nextQuestion: !state.nextQuestion }));
     return wrongOption();
   }
 
   render() {
-    const { questionIndex, nextQuestion } = this.state;
+    const { questionIndex } = this.state;
     const {
-      isLogged, loading, triviaData,
+      isLogged, loading, triviaData, answeredQuestion,
     } = this.props;
     if (isLogged) {
       return loading ? (
@@ -104,16 +109,17 @@ class Game extends Component {
           <Header />
           <TriviaCard
             data={triviaData[questionIndex]}
-            disabled={nextQuestion}
+            disabled={answeredQuestion}
             onCorrect={this.clickOnCorrect}
             onWrong={this.clickOnWrong}
           />
-          {nextQuestion && (
+          {answeredQuestion && (
             <NextButton
               condition={questionIndex === triviaData.length - 1}
               onClick={this.updateQuestionIndex}
             />
           )}
+          <Timer />
         </main>
       );
     }
@@ -145,6 +151,8 @@ Game.propTypes = {
   userEmail: PropTypes.string.isRequired,
   correctOption: PropTypes.func.isRequired,
   wrongOption: PropTypes.func.isRequired,
+  nextTriviaCard: PropTypes.func.isRequired,
+  answeredQuestion: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -155,15 +163,20 @@ const mapStateToProps = (state) => ({
   loading: state.triviaInfo.loading,
   score: state.gameInfo.score,
   assertions: state.gameInfo.assertions,
+  answeredQuestion: state.gameInfo.answered,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getTriviaQuestions: (token,
     categoryID,
     difficulty,
-    type) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
+    type) => dispatch(fetchingTriviaQuestions(token,
+    categoryID,
+    difficulty,
+    type)),
   correctOption: (score, assertions) => dispatch(correctAnswer(score, assertions)),
   wrongOption: () => dispatch(wrongAnswer()),
+  nextTriviaCard: () => dispatch(nextQuestion()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

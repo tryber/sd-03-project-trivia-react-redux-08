@@ -6,6 +6,8 @@ import {
   CORRECT_ANSWER,
   WRONG_ANSWER,
   RESET_GAME,
+  TIME_OUT,
+  NEXT_QUESTION,
 } from './actions';
 import { getTriviaQuestions } from '../services/endpoints_API';
 
@@ -55,4 +57,12 @@ export const wrongAnswer = () => ({
 
 export const resetGame = () => ({
   type: RESET_GAME,
+});
+
+export const timeOut = () => ({
+  type: TIME_OUT,
+});
+
+export const nextQuestion = () => ({
+  type: NEXT_QUESTION,
 });
