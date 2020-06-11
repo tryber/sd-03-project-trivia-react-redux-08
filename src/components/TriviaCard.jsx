@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import shuffleQuestions from '../services/shuffleQuestions';
+import '../styles/TriviaCard.css';
 
 const answers = ({
   correct_answer: correctAnswer,
@@ -40,6 +41,7 @@ const TriviaCard = ({
             key={answer}
             onClick={onCorrect}
             disabled={disabled}
+            className={disabled ? 'correct-answer' : ''}
           >
             {answer}
           </button>
@@ -50,6 +52,7 @@ const TriviaCard = ({
             key={answer}
             onClick={onWrong}
             disabled={disabled}
+            className={disabled ? 'incorrect-answer' : ''}
           >
             {answer}
           </button>
