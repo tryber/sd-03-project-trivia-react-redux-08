@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchingTriviaQuestions } from '../actions/actionsCreators';
-import TriviaCard from '../components/TriviaCard';
 import Header from '../components/Header';
+import TriviaCard from '../components/TriviaCard';
+import NextButton from '../components/NextButton';
 
 class Game extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class Game extends Component {
       timerOn: false,
     };
 
-    this.updateQuestionIndex=this.updateQuestionIndex.bind(this);
+    this.updateQuestionIndex = this.updateQuestionIndex.bind(this);
   }
 
   componentDidMount() {
@@ -33,9 +34,13 @@ class Game extends Component {
     const { questionIndex } = this.state;
     const { triviaData } = this.props;
     if (questionIndex < triviaData.length) {
-      return this.setState(({questionIndex}) => ({ questionIndex: questionIndex +1}))
+      return this.setState((state) => ({ questionIndex: state.questionIndex + 1 }));
     }
-    
+    return this.setState({ questionIndex: 0 });
+  }
+
+  calculateScore() {
+
   }
 
   render() {
@@ -51,9 +56,10 @@ class Game extends Component {
           <Header />
           <TriviaCard data={triviaData[questionIndex]} />
           {nextQuestion && (
-            <button type="button" data-test-id="btn-next" onClick={}>
-              Próxima
-            </button>
+            <NextButton
+              condition={questionIndex === triviaData.length}
+              onClick={this.updateQuestionIndex}
+            />
           )}
         </main>
       );

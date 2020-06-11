@@ -2,7 +2,7 @@ import {
   CORRECT_ANSWER,
   WRONG_ANSWER,
   RESET_GAME,
-} from '../actions/actionsCreators';
+} from '../actions/actions';
 
 const INITIAL_STATE = {
   score: 0,
