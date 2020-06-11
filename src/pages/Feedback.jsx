@@ -6,6 +6,7 @@ function Feedback() {
     <div>
       <h1>Feedback</h1>
       <Header />
+      <p data-testid="feedback-text">Implementando</p>
     </div>
   );
 }
