@@ -8,10 +8,10 @@ class Timer extends Component {
     this.timerOn = setInterval(() => {
       const { questionAnswered, seconds, startTimer } = this.props;
 
-      if (seconds > 0) {
+      if (seconds > 0 && questionAnswered === false) {
         startTimer();
       }
-      if (seconds === 0) {
+      if (seconds === 0 || questionAnswered === true) {
         clearInterval(this.timerOn);
       }
     }, 1000);
