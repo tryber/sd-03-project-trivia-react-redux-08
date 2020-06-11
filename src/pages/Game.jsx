@@ -42,9 +42,9 @@ class Game extends Component {
     return this.setState({ questionIndex: 0, nextQuestion: false });
   }
 
-  calculateScore() {
+  // calculateScore() {
 
-  }
+  // }
 
   render() {
     const { questionIndex, nextQuestion } = this.state;

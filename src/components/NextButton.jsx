@@ -2,21 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const NextButton = ({ onClick, condition }) => {
-  return condition ? (
-    <Link to="/feedback">
-      <button type="button" data-test-id="btn-next">
-        Próxima
-      </button>
-    </Link>
-  ) : (
-    <div>
-      <button type="button" data-test-id="btn-next" onClick={onClick}>
-        Próxima
-      </button>
-    </div>
-  );
-};
+const NextButton = ({ onClick, condition }) => (condition ? (
+  <Link to="/feedback">
+    <button type="button" data-test-id="btn-next">
+      Próxima
+    </button>
+  </Link>
+) : (
+  <div>
+    <button type="button" data-test-id="btn-next" onClick={onClick}>
+      Próxima
+    </button>
+  </div>
+));
 
 NextButton.propTypes = {
   onClick: PropTypes.func.isRequired,
