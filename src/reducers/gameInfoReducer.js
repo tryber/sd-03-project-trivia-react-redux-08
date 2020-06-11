@@ -16,10 +16,9 @@ const gameInfoReducer = (state = INITIAL_STATE, action) => {
         ...state,
         score: action.score,
         assertions: action.assertions,
-        scored: true,
       };
     case WRONG_ANSWER:
-      return { ...state, scored: false };
+      return { ...state };
     case RESET_GAME:
       return INITIAL_STATE;
     default:

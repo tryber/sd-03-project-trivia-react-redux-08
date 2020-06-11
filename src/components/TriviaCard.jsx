@@ -13,7 +13,7 @@ const answers = ({
 const findCorrectAnswer = (array, { correct_answer: correctAnswer }) => array
   .find((item) => item === correctAnswer);
 
-const TriviaCard = ({ data }) => {
+const TriviaCard = ({ data, disabled, onCorrect, onWrong }) => {
   const randomTriviaAnswers = shuffleQuestions(answers(data));
   return (
     <section>
@@ -30,9 +30,15 @@ const TriviaCard = ({ data }) => {
         {data.difficulty}
       </p>
       <p data-testid="question-text">{data.question}</p>
-      {randomTriviaAnswers
-        .map((answer, index) => (answer === findCorrectAnswer(randomTriviaAnswers, data) ? (
-          <button type="button" data-testid="correct-answer" key={answer}>
+      {randomTriviaAnswers.map((answer, index) =>
+        answer === findCorrectAnswer(randomTriviaAnswers, data) ? (
+          <button
+            type="button"
+            data-testid="correct-answer"
+            key={answer}
+            onClick={onCorrect}
+            disabled={disabled}
+          >
             {answer}
           </button>
         ) : (
@@ -40,10 +46,13 @@ const TriviaCard = ({ data }) => {
             type="button"
             data-testid={`wrong-answer-${index}`}
             key={answer}
+            onClick={onWrong}
+            disabled={disabled}
           >
             {answer}
           </button>
-        )))}
+        ),
+      )}
     </section>
   );
 };
@@ -57,6 +66,9 @@ TriviaCard.propTypes = {
     correct_answer: PropTypes.string.isRequired,
     incorrect_answers: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
+  disabled: PropTypes.bool.isRequired,
+  onCorrect: PropTypes.func.isRequired,
+  onWrong: PropTypes.func.isRequired,
 };
 
 export default TriviaCard;
