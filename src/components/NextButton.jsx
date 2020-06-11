@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 const NextButton = ({ onClick, condition }) => (condition ? (
   <Link to="/feedback">
-    <button type="button" data-test-id="btn-next">
+    <button type="button" data-testid="btn-next">
       Próxima
     </button>
   </Link>
 ) : (
   <div>
-    <button type="button" data-test-id="btn-next" onClick={onClick}>
+    <button type="button" data-testid="btn-next" onClick={onClick}>
       Próxima
     </button>
   </div>
