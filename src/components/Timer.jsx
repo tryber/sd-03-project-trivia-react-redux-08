@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setTimer, resetTimer } from '../actions/actionsCreators';
+import { setTimer, timeOut } from '../actions/actionsCreators';
 
 class Timer extends Component {
   componentDidMount() {
     this.timerOn = setInterval(() => {
-      const { questionAnswered, seconds, startTimer } = this.props;
+      const {
+        questionAnswered, seconds, startTimer, endTimer,
+      } = this.props;
 
       if (seconds > 0 && questionAnswered === false) {
         startTimer();
       }
-      if (seconds === 0 || questionAnswered === true) {
+      if (seconds === 0 && questionAnswered === false) {
+        endTimer();
         clearInterval(this.timerOn);
       }
+      if (questionAnswered === true) {
+        return clearInterval(this.timerOn);
+      }
+      return false;
     }, 1000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.handleTimer);
+    clearInterval(this.timerOn);
   }
-
-  // handleTimer() {
-  //   const { questionAnswered, seconds, startTimer } = this.props;
-  //   const timerOn = setInterval(() => ((seconds > 0 && !questionAnswered)
-  //     ? startTimer() : clearInterval(timerOn)), 1000);
-  //   return timerOn;
-  // }
 
   render() {
     const { seconds } = this.props;
@@ -46,7 +46,7 @@ Timer.propTypes = {
   questionAnswered: PropTypes.bool.isRequired,
   seconds: PropTypes.number.isRequired,
   startTimer: PropTypes.func.isRequired,
-  updateTimer: PropTypes.func.isRequired,
+  endTimer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -56,7 +56,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   startTimer: () => dispatch(setTimer()),
-  updateTimer: () => dispatch(resetTimer()),
+  endTimer: () => dispatch(timeOut()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
