@@ -1,12 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
+import FeedBackMsg from '../components/FeedBackMsg';
 
 function Feedback() {
   return (
     <div>
       <h1>Feedback</h1>
       <Header />
-      <p data-testid="feedback-text">Implementando</p>
+      <FeedBackMsg />
     </div>
   );
 }
