@@ -8,9 +8,9 @@ const FeedBackMsg = ({ assertions }) => (assertions >= 3 ? (
   <p data-testid="feedback-text">Podia ser melhor!</p>
 ));
 
-FeedBackMsg.prototype = {
+FeedBackMsg.protoTypes = {
   assertions: PropTypes.number.isRequired,
-}
+};
 
 const mapStateToProps = ({ gameInfo }) => ({
   assertions: gameInfo.assertions,
