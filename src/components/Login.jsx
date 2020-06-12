@@ -36,8 +36,8 @@ class Login extends React.Component {
       ...state,
       token: userToken.token,
     }));
-    localStorage.setItem('token', userToken.token);
-    setUserInfoStore(this.state);
+    localStorage.setItem('token', JSON.stringify(userToken.token));
+    return setUserInfoStore(this.state);
   }
 
   renderEmail() {
