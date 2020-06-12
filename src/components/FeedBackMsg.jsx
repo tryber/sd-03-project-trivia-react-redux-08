@@ -8,7 +8,7 @@ const FeedBackMsg = ({ assertions }) => (assertions >= 3 ? (
   <p data-testid="feedback-text">Podia ser melhor!</p>
 ));
 
-FeedBackMsg.protoTypes = {
+FeedBackMsg.propTypes = {
   assertions: PropTypes.number.isRequired,
 };
 
