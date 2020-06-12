@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const FeedBackMsg = ({ assertions }) => (assertions >= 3 ? (
-  <p data-testid="feedback-text">Mandou bem!</p>
+  <h3 data-testid="feedback-text">Mandou bem!</h3>
 ) : (
-  <p data-testid="feedback-text">Podia ser melhor!</p>
+  <h3 data-testid="feedback-text">Podia ser melhor!</h3>
 ));
 
 FeedBackMsg.propTypes = {
