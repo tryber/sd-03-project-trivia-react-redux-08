@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 const Results = ({ score, assertions }) => (
   <div>
-    <h4>{`Você acertou ${assertions} questões!`}</h4>
-    <h4>{`Um total de ${score} pontos`}</h4>
+    <h4 data-testid="feedback-total-question" >{`Você acertou ${assertions} questões!`}</h4>
+    <h4 data-testid="feedback-total-score">{`Um total de ${score} pontos`}</h4>
   </div>
 );
 
