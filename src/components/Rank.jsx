@@ -18,7 +18,7 @@ class Rank extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  islogged: state.userInfo.isLogged,
+  islogged: state.userInfo,
 });
 
 export default connect(mapStateToProps)(Rank);
