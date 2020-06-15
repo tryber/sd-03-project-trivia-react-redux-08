@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shuffleQuestions from '../services/shuffleQuestions';
 import '../styles/TriviaCard.css';
-import Timer from '../components/Timer';
+import Timer from './Timer';
 
 const answers = ({
   correct_answer: correctAnswer,
