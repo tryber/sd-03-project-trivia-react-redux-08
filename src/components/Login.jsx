@@ -17,6 +17,10 @@ class Login extends React.Component {
     };
   }
 
+  componentDidMount() {
+    localStorage.removeItem('state');
+  }
+
   handleStateChange(field, value) {
     this.setState((state) => ({
       ...state,
