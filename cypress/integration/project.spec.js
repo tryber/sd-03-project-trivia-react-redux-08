@@ -38,7 +38,7 @@ const FEEDBACK_TOTAL_SCORE_SELECTOR = '[data-testid="feedback-total-score"]';
 const FEEDBACK_TOTAL_QUESTION_SELECTOR = '[data-testid="feedback-total-question"]';
 const BUTTON_PLAY_AGAIN_SELECTOR = '[data-testid="btn-play-again"]';
 
-game
+// game
 
 describe('O _header_ deve conter as informações da pessoa jogadora', () => {
   beforeEach(() => {
@@ -256,7 +256,7 @@ describe('A pessoa que joga deve responder 5 perguntas no total', () => {
   });
 });
 
-home
+// home
 
 describe('A pessoa que joga deve preencher as informações para iniciar um jogo', () => {
   beforeEach(() => {
