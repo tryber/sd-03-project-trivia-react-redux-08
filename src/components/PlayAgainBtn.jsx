@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PlayAgainBtn = () => (
-  <Link 
+  <Link
     to="/"
     data-testid="btn-play-again"
   >
