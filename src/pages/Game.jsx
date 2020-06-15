@@ -53,9 +53,12 @@ class Game extends Component {
       assertions,
       userName,
       userEmail,
+      isLogged,
     } = this.props;
     updatePlayerInfo(score, assertions, userName, userEmail);
-    getTriviaQuestions(token, categoryID, difficulty, type);
+    const state = JSON.parse(localStorage.getItem('state'));
+    console.log(state.player.score);
+    return isLogged ? getTriviaQuestions(token, categoryID, difficulty, type) : undefined;
   }
 
   updateQuestionIndexAndTimer() {
@@ -93,6 +96,8 @@ class Game extends Component {
     const updatedScore = this.updateScore(score);
     const updatedAssertions = assertions + 1;
     updatePlayerInfo(updatedScore, updatedAssertions, userName, userEmail);
+    const state = JSON.parse(localStorage.getItem('state'));
+    console.log(state.player.score);
     return correctOption(updatedScore, updatedAssertions);
   }
 
