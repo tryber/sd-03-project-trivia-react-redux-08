@@ -12,7 +12,6 @@ import {
 import Header from '../components/Header';
 import TriviaCard from '../components/TriviaCard';
 import NextButton from '../components/NextButton';
-import Timer from '../components/Timer';
 
 function updatePlayerInfo(score, assertions, name, email) {
   const state = {
@@ -125,7 +124,6 @@ class Game extends Component {
               onClick={this.updateQuestionIndexAndTimer}
             />
           )}
-          <Timer />
         </main>
       );
     }
