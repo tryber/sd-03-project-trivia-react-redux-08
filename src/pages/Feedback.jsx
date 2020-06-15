@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import FeedBackMsg from '../components/FeedBackMsg';
+import Results from '../components/Results';
 
 function Feedback() {
   return (
@@ -8,6 +9,7 @@ function Feedback() {
       <h1>Feedback</h1>
       <Header />
       <FeedBackMsg />
+      <Results />
     </div>
   );
 }
