@@ -28,7 +28,7 @@ class Timer extends Component {
       if (seconds > 0 && questionAnswered === false) {
         return this.setState((state) => ({
           seconds: state.seconds - 1,
-          timerStarted: true,
+          timerStarted: !state.timerStarted,
         }));
       }
       if (seconds === 0 && questionAnswered === false) {
