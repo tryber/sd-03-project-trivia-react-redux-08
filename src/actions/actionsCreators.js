@@ -3,6 +3,7 @@ import {
   QUESTIONS_REQUEST_SUCESS,
   QUESTIONS_REQUEST_FAILURE,
   SET_USER_LOGIN,
+  RESET_USER_LOGIN,
   CORRECT_ANSWER,
   WRONG_ANSWER,
   RESET_GAME,
@@ -45,6 +46,10 @@ export function fetchingTriviaQuestions(token, categoryID, difficulty, type) {
 export const setUserInfo = (data) => ({
   type: SET_USER_LOGIN,
   data,
+});
+
+export const resetUserLogin = () => ({
+  type: RESET_USER_LOGIN,
 });
 
 export const correctAnswer = (score, assertions) => ({
