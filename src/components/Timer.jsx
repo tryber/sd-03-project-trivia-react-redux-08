@@ -4,6 +4,15 @@ import PropTypes from 'prop-types';
 import { setTimer, timeOut } from '../actions/actionsCreators';
 
 class Timer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      seconds: 30,
+      timerStarted: false,
+    };
+  }
+
   componentDidMount() {
     this.handleTimer();
   }
@@ -13,30 +22,38 @@ class Timer extends Component {
   }
 
   handleTimer() {
+    this.setState({ seconds: 30 });
     return setInterval(() => {
-      const {
-        questionAnswered, seconds, startTimer, endTimer,
-      } = this.props;
+      const { seconds, timerStarted } = this.state;
+      const { questionAnswered, startTimer, endTimer } = this.props;
       if (seconds > 0 && questionAnswered === false) {
-        return startTimer();
+        return this.setState((state) => ({
+          seconds: state.seconds - 1,
+          timerStarted: !state.timerStarted,
+        }));
       }
       if (seconds === 0 && questionAnswered === false) {
         endTimer();
         return clearInterval(this.handleTimer());
+      }
+      if (questionAnswered === true && timerStarted === true) {
+        clearInterval(this.handleTimer());
+        startTimer(seconds);
+        return this.setState({ timerStarted: false });
       }
       return clearInterval(this.handleTimer());
     }, 1000);
   }
 
   render() {
-    const { seconds } = this.props;
+    const { seconds } = this.state;
     return (
       <section>
-        <p>
+        <h5>
           {`Tempo Restante: 
           ${seconds}
           `}
-        </p>
+        </h5>
       </section>
     );
   }
@@ -44,18 +61,16 @@ class Timer extends Component {
 
 Timer.propTypes = {
   questionAnswered: PropTypes.bool.isRequired,
-  seconds: PropTypes.number.isRequired,
   startTimer: PropTypes.func.isRequired,
   endTimer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   questionAnswered: state.gameInfo.answered,
-  seconds: state.timerInfo.timer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startTimer: () => dispatch(setTimer()),
+  startTimer: (seconds) => dispatch(setTimer(seconds)),
   endTimer: () => dispatch(timeOut()),
 });
 
