@@ -20,7 +20,7 @@ const TriviaCard = ({
 }) => {
   const randomTriviaAnswers = shuffleQuestions(answers(data));
   return (
-    <section>
+    <section className="trivia-card">
       <p data-testid="question-category">
         Categoria:
         {data.category}
