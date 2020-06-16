@@ -25,9 +25,6 @@ class Timer extends Component {
         endTimer();
         clearInterval(this.timerOn);
       }
-      if (questionAnswered === true) {
-        return clearInterval(this.timerOn);
-      }
       return clearInterval(this.timerOn);
     }, 1000);
     return timerOn;

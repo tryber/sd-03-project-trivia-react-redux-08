@@ -14,7 +14,7 @@ function Feedback() {
       <FeedBackMsg />
       <Results />
       <Link to="/ranking" data-testid="btn-ranking">
-        JOGAR NOVAMENTE
+        VER RANKING
       </Link>
       <Link to="/" data-testid="btn-play-again">
         JOGAR NOVAMENTE
