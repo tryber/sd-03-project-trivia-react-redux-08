@@ -9,6 +9,7 @@ import {
   nextQuestion,
   resetTimer,
 } from '../actions/actionsCreators';
+import hashedMail from '../services/encrypt_mail';
 import Header from '../components/Header';
 import TriviaCard from '../components/TriviaCard';
 import NextButton from '../components/NextButton';
@@ -26,6 +27,19 @@ function updatePlayerInfo(score, assertions, name, email) {
   localStorage.setItem('state', stringfyState);
 }
 
+function updateRankingInfo(name, score, email) {
+  const storedRanking = JSON.parse(localStorage.getItem('ranking') || '[]');
+  const hash = hashedMail(email);
+  const ranking = {
+    name,
+    score,
+    picture: `https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`,
+  };
+  const updateRanking = [...storedRanking, ranking];
+  const stringifyRanking = JSON.stringify(updateRanking);
+  localStorage.setItem('ranking', stringifyRanking);
+}
+
 class Game extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +53,7 @@ class Game extends Component {
     );
     this.clickOnCorrect = this.clickOnCorrect.bind(this);
     this.clickOnWrong = this.clickOnWrong.bind(this);
+    this.updatePlayerRank = this.updatePlayerRank.bind(this);
   }
 
   componentDidMount() {
@@ -101,11 +116,14 @@ class Game extends Component {
     return wrongOption();
   }
 
+  updatePlayerRank() {
+    const { userName, userEmail, score } = this.props;
+    return updateRankingInfo(userName, score, userEmail);
+  }
+
   render() {
     const { questionIndex } = this.state;
-    const {
-      isLogged, loading, triviaData, answeredQuestion,
-    } = this.props;
+    const { isLogged, loading, triviaData, answeredQuestion } = this.props;
     if (isLogged) {
       return loading ? (
         <h1>Loading...</h1>
@@ -122,6 +140,7 @@ class Game extends Component {
             <NextButton
               condition={questionIndex === triviaData.length - 1}
               onClick={this.updateQuestionIndexAndTimer}
+              onGameEnd={this.updatePlayerRank}
             />
           )}
         </main>
