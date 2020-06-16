@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
 import StartBtn from '../components/StartBtn';
 import Rank from '../components/Rank';
 
@@ -11,7 +10,6 @@ const Ranking = ({ isLogged }) => {
     return (
       <div>
         <h1>Ranking</h1>
-        <Header />
         <Rank />
         <StartBtn />
       </div>
