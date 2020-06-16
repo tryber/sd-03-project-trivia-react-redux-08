@@ -12,7 +12,8 @@ const answers = ({
   ...Object.values({ ...incorrectAnswers }),
 ];
 
-const findCorrectAnswer = (array, { correct_answer: correctAnswer }) => array.find((item) => item === correctAnswer);
+const findCorrectAnswer = (array, { correct_answer: correctAnswer }) => array
+  .find((item) => item === correctAnswer);
 
 const TriviaCard = ({
   data, disabled, onCorrect, onWrong,
@@ -35,33 +36,34 @@ const TriviaCard = ({
       <p data-testid="question-text" className="trivia-question">
         {data.question}
       </p>
-      {randomTriviaAnswers.map((answer, index) => (answer === findCorrectAnswer(randomTriviaAnswers, data) ? (
-        <button
-          type="button"
-          data-testid="correct-answer"
-          key={answer}
-          onClick={onCorrect}
-          disabled={disabled}
-          className={
+      {randomTriviaAnswers
+        .map((answer, index) => (answer === findCorrectAnswer(randomTriviaAnswers, data) ? (
+          <button
+            type="button"
+            data-testid="correct-answer"
+            key={answer}
+            onClick={onCorrect}
+            disabled={disabled}
+            className={
               disabled ? 'trivia-button correct-answer' : 'trivia-button'
             }
-        >
-          {answer}
-        </button>
-      ) : (
-        <button
-          type="button"
-          data-testid={`wrong-answer-${index}`}
-          key={answer}
-          onClick={onWrong}
-          disabled={disabled}
-          className={
+          >
+            {answer}
+          </button>
+        ) : (
+          <button
+            type="button"
+            data-testid={`wrong-answer-${index}`}
+            key={answer}
+            onClick={onWrong}
+            disabled={disabled}
+            className={
               disabled ? 'trivia-button incorrect-answer' : 'trivia-button'
             }
-        >
-          {answer}
-        </button>
-      )))}
+          >
+            {answer}
+          </button>
+        )))}
       <Timer />
     </section>
   );
