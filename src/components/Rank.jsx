@@ -7,6 +7,11 @@ class Rank extends React.Component {
     console.log(rank[0]);
     return (
       <div>
+        <h2
+          data-testid="ranking-title"
+        >
+          Ranking
+        </h2>
         <ol>
           {rank.map((player, index) => (
             <li key={`${player.name}_${player.score}`}>
