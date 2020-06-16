@@ -101,7 +101,7 @@ class Login extends React.Component {
     const { userLogged } = this.props;
     const renderComponent = !userLogged
       ? (
-        <div className="login-form">
+        <div className="login-page">
           <div className="form">
             <Link
               className="label"
