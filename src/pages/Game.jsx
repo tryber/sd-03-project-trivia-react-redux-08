@@ -92,11 +92,11 @@ class Game extends Component {
     const { triviaData, answerTime } = this.props;
     switch (triviaData[questionIndex].difficulty) {
       case 'easy':
-        return 10 + answerTime * 1 + prevScore;
+        return 10 + (answerTime * 1) + prevScore;
       case 'medium':
-        return 10 + answerTime * 2 + prevScore;
+        return 10 + (answerTime * 2) + prevScore;
       case 'hard':
-        return 10 + answerTime * 3 + prevScore;
+        return 10 + (answerTime * 3) + prevScore;
       default:
         return 0;
     }
@@ -128,9 +128,7 @@ class Game extends Component {
 
   render() {
     const { questionIndex } = this.state;
-    const {
-      isLogged, loading, triviaData, answeredQuestion,
-    } = this.props;
+    const { isLogged, loading, triviaData, answeredQuestion } = this.props;
     if (isLogged) {
       return loading ? (
         <h1>Loading...</h1>
