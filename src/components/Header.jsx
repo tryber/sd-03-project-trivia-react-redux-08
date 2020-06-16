@@ -21,7 +21,8 @@ function Header({ userName, score, userEmail }) {
         </span>
       </div>
       <div>
-        <h3 className="player-score" data-testid="header-score">{score}</h3>
+        <span className="player-score" data-testid="header-score">{score}</span>
+        <span>Pontos</span>
       </div>
     </header>
   );
