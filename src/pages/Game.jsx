@@ -28,15 +28,16 @@ function updatePlayerInfo(score, assertions, name, email) {
 }
 
 function updateRankingInfo(name, score, email) {
-  const storedRanking = localStorage.setItem('ranking', []);
+  const storedRanking = JSON.parse(localStorage.getItem('ranking') || '[]');
   const hash = hashedMail(email);
   const ranking = {
     name,
     score,
     picture: `https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`,
   };
-  const stringifyRanking = JSON.stringify(ranking);
-  return localStorage.setItem('ranking', [...storedRanking, stringifyRanking]);
+  const updateRanking = [...storedRanking, ranking];
+  const stringifyRanking = JSON.stringify(updateRanking);
+  localStorage.setItem('ranking', stringifyRanking);
 }
 
 class Game extends Component {
@@ -123,7 +124,7 @@ class Game extends Component {
 
   updateEndGameInfo() {
     const { userName, score, userEmail } = this.props;
-    return updateRankingInfo(userName, score, userEmail);
+    updateRankingInfo(userName, score, userEmail);
   }
 
   render() {

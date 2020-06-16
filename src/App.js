@@ -19,11 +19,11 @@ export default function App() {
         <p>SUA VEZ</p>
       </header>
       <Switch>
-        <Route exact path="/" component={Home} />
         <Route path="/game" component={Game} />
         <Route path="/feedback" component={Feedback} />
         <Route path="/ranking" component={Ranking} />
         <Route path="/settings" component={Settings} />
+        <Route exact path="/" component={Home} />
         <Route component={NotFound} />
       </Switch>
     </div>
