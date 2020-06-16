@@ -9,11 +9,11 @@ class Timer extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerOn);
+    clearInterval(this.handleTimer());
   }
 
   handleTimer() {
-    setInterval(() => {
+    const timerOn = setInterval(() => {
       const {
         questionAnswered, seconds, startTimer, endTimer,
       } = this.props;
@@ -28,8 +28,9 @@ class Timer extends Component {
       if (questionAnswered === true) {
         return clearInterval(this.timerOn);
       }
-      return false;
+      return clearInterval(this.timerOn);
     }, 1000);
+    return timerOn;
   }
 
   render() {

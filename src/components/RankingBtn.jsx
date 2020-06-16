@@ -1,9 +1,7 @@
 import React from 'react';
 
 const RankingBtn = () => (
-  <button
-    data-testid="btn-ranking"
-  >
+  <button type="button" data-testid="btn-ranking">
     VER RANKING
   </button>
 );
