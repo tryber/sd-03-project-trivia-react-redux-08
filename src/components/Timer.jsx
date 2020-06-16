@@ -4,6 +4,14 @@ import PropTypes from 'prop-types';
 import { setTimer, timeOut } from '../actions/actionsCreators';
 
 class Timer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      seconds: 30,
+    };
+  }
+
   componentDidMount() {
     this.handleTimer();
   }
@@ -14,22 +22,24 @@ class Timer extends Component {
 
   handleTimer() {
     return setInterval(() => {
-      const {
-        questionAnswered, seconds, startTimer, endTimer,
-      } = this.props;
+      const { seconds } = this.state;
+      const { questionAnswered, startTimer, endTimer } = this.props;
       if (seconds > 0 && questionAnswered === false) {
-        return startTimer();
+        return this.setState((state) => ({
+          seconds: state.seconds - 1,
+        }));
       }
       if (seconds === 0 && questionAnswered === false) {
         endTimer();
         return clearInterval(this.handleTimer());
       }
+      startTimer();
       return clearInterval(this.handleTimer());
     }, 1000);
   }
 
   render() {
-    const { seconds } = this.props;
+    const { seconds } = this.state;
     return (
       <section>
         <p>
@@ -44,14 +54,12 @@ class Timer extends Component {
 
 Timer.propTypes = {
   questionAnswered: PropTypes.bool.isRequired,
-  seconds: PropTypes.number.isRequired,
   startTimer: PropTypes.func.isRequired,
   endTimer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   questionAnswered: state.gameInfo.answered,
-  seconds: state.timerInfo.timer,
 });
 
 const mapDispatchToProps = (dispatch) => ({

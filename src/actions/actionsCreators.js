@@ -74,8 +74,9 @@ export const nextQuestion = () => ({
   type: NEXT_QUESTION,
 });
 
-export const setTimer = () => ({
+export const setTimer = (number) => ({
   type: SET_TIMER,
+  timer: number,
 });
 
 export const resetTimer = () => ({
