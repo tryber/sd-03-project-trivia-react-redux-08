@@ -22,9 +22,9 @@ class Timer extends Component {
       }
       if (seconds === 0 && questionAnswered === false) {
         endTimer();
-        return clearInterval(this.timerOn);
+        return clearInterval(this.handleTimer());
       }
-      return clearInterval(this.timerOn);
+      return clearInterval(this.handleTimer());
     }, 1000);
   }
 
