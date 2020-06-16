@@ -13,21 +13,19 @@ class Timer extends Component {
   }
 
   handleTimer() {
-    const timerOn = setInterval(() => {
+    return setInterval(() => {
       const {
         questionAnswered, seconds, startTimer, endTimer,
       } = this.props;
-
       if (seconds > 0 && questionAnswered === false) {
-        startTimer();
+        return startTimer();
       }
       if (seconds === 0 && questionAnswered === false) {
         endTimer();
-        clearInterval(this.timerOn);
+        return clearInterval(this.timerOn);
       }
       return clearInterval(this.timerOn);
     }, 1000);
-    return timerOn;
   }
 
   render() {
