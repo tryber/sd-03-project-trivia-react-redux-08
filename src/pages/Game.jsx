@@ -12,6 +12,7 @@ import {
 import Header from '../components/Header';
 import TriviaCard from '../components/TriviaCard';
 import NextButton from '../components/NextButton';
+import hashedMail from '../services/encrypt_mail';
 
 function updatePlayerInfo(score, assertions, name, email) {
   const state = {
@@ -24,6 +25,18 @@ function updatePlayerInfo(score, assertions, name, email) {
   };
   const stringfyState = JSON.stringify(state);
   localStorage.setItem('state', stringfyState);
+}
+
+function updateRankingInfo(name, score, email) {
+  const storedRanking = localStorage.setItem('ranking', []);
+  const hash = hashedMail(email);
+  const ranking = {
+    name,
+    score,
+    picture: `https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`,
+  };
+  const stringifyRanking = JSON.stringify(ranking);
+  return localStorage.setItem('ranking', [...storedRanking, stringifyRanking]);
 }
 
 class Game extends Component {
@@ -39,6 +52,7 @@ class Game extends Component {
     );
     this.clickOnCorrect = this.clickOnCorrect.bind(this);
     this.clickOnWrong = this.clickOnWrong.bind(this);
+    this.updateEndGameInfo = this.updateEndGameInfo.bind(this);
   }
 
   componentDidMount() {
@@ -55,7 +69,9 @@ class Game extends Component {
       isLogged,
     } = this.props;
     updatePlayerInfo(score, assertions, userName, userEmail);
-    return isLogged ? getTriviaQuestions(token, categoryID, difficulty, type) : console.error('Not Logged');
+    return isLogged
+      ? getTriviaQuestions(token, categoryID, difficulty, type)
+      : console.error('Not Logged');
   }
 
   updateQuestionIndexAndTimer() {
@@ -76,11 +92,11 @@ class Game extends Component {
     const { triviaData, answerTime } = this.props;
     switch (triviaData[questionIndex].difficulty) {
       case 'easy':
-        return 10 + (answerTime * 1) + prevScore;
+        return 10 + answerTime * 1 + prevScore;
       case 'medium':
-        return 10 + (answerTime * 2) + prevScore;
+        return 10 + answerTime * 2 + prevScore;
       case 'hard':
-        return 10 + (answerTime * 3) + prevScore;
+        return 10 + answerTime * 3 + prevScore;
       default:
         return 0;
     }
@@ -88,7 +104,11 @@ class Game extends Component {
 
   clickOnCorrect() {
     const {
-      score, assertions, correctOption, userName, userEmail,
+      score,
+      assertions,
+      correctOption,
+      userName,
+      userEmail,
     } = this.props;
     const updatedScore = this.updateScore(score);
     const updatedAssertions = assertions + 1;
@@ -99,6 +119,11 @@ class Game extends Component {
   clickOnWrong() {
     const { wrongOption } = this.props;
     return wrongOption();
+  }
+
+  updateEndGameInfo() {
+    const { userName, score, userEmail } = this.props;
+    return updateRankingInfo(userName, score, userEmail);
   }
 
   render() {
@@ -122,12 +147,17 @@ class Game extends Component {
             <NextButton
               condition={questionIndex === triviaData.length - 1}
               onClick={this.updateQuestionIndexAndTimer}
+              onGameEnd={this.updateEndGameInfo}
             />
           )}
         </main>
       );
     }
-    return (<h1><Link to="/">Oops! Please, log to play!</Link></h1>);
+    return (
+      <h1>
+        <Link to="/">Oops! Please, log to play!</Link>
+      </h1>
+    );
   }
 }
 
@@ -173,10 +203,7 @@ const mapDispatchToProps = (dispatch) => ({
   getTriviaQuestions: (token,
     categoryID,
     difficulty,
-    type) => dispatch(fetchingTriviaQuestions(token,
-    categoryID,
-    difficulty,
-    type)),
+    type) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
   correctOption: (score, assertions) => dispatch(correctAnswer(score, assertions)),
   wrongOption: () => dispatch(wrongAnswer()),
   nextTriviaCard: () => dispatch(nextQuestion()),
