@@ -17,7 +17,13 @@ const Ranking = ({ isLogged }) => {
       </div>
     );
   }
-  return (<h1><Link to="/">Oops! Please, log to play!</Link></h1>);
+  return (
+    <h1>
+      <Link to="/">
+        Oops! Please, log to play!
+      </Link>
+    </h1>
+  );
 };
 
 Ranking.propTypes = {

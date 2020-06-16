@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 
 class Rank extends React.Component {
   render() {
-    const rank = JSON.parse(localStorage.getItem('ranking'));
-    console.log(rank[0]);
+    const sortedRank = [...JSON.parse(localStorage.getItem('ranking'))]
+      .sort((a, b) => (a.score - b.score) * -1);
+
     return (
       <div>
         <h2
@@ -13,7 +14,7 @@ class Rank extends React.Component {
           Ranking
         </h2>
         <ol>
-          {rank.map((player, index) => (
+          {sortedRank.map((player, index) => (
             <li key={`${player.name}_${player.score}`}>
               <img src={player.picture} alt="player pic" />
               <h3 data-testid={`player-name-${index}`}>{player.name}</h3>
