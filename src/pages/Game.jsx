@@ -13,6 +13,7 @@ import hashedMail from '../services/encrypt_mail';
 import Header from '../components/Header';
 import TriviaCard from '../components/TriviaCard';
 import NextButton from '../components/NextButton';
+import '../styles/Game.css';
 
 class Game extends Component {
   static async updatePlayerInfo(score, assertions, name, email) {
@@ -141,7 +142,7 @@ class Game extends Component {
       return loading ? (
         <h1>Loading...</h1>
       ) : (
-        <main>
+        <main className="game-container">
           <Header />
           <TriviaCard
             data={triviaData[questionIndex]}
