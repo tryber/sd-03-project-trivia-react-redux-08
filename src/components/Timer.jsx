@@ -22,6 +22,7 @@ class Timer extends Component {
   }
 
   handleTimer() {
+    this.setState({ seconds: 30 });
     return setInterval(() => {
       const { seconds, timerStarted } = this.state;
       const { questionAnswered, startTimer, endTimer } = this.props;
