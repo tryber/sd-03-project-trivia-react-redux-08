@@ -9,6 +9,7 @@ class Timer extends Component {
 
     this.state = {
       seconds: 30,
+      timerStarted: false,
     };
   }
 
@@ -22,18 +23,23 @@ class Timer extends Component {
 
   handleTimer() {
     return setInterval(() => {
-      const { seconds } = this.state;
+      const { seconds, timerStarted } = this.state;
       const { questionAnswered, startTimer, endTimer } = this.props;
       if (seconds > 0 && questionAnswered === false) {
         return this.setState((state) => ({
           seconds: state.seconds - 1,
+          timerStarted: true,
         }));
       }
       if (seconds === 0 && questionAnswered === false) {
         endTimer();
         return clearInterval(this.handleTimer());
       }
-      startTimer();
+      if (questionAnswered === true && timerStarted === true) {
+        clearInterval(this.handleTimer());
+        startTimer(seconds);
+        return this.setState({ timerStarted: false });
+      }
       return clearInterval(this.handleTimer());
     }, 1000);
   }
@@ -42,11 +48,11 @@ class Timer extends Component {
     const { seconds } = this.state;
     return (
       <section>
-        <p>
+        <h5>
           {`Tempo Restante: 
           ${seconds}
           `}
-        </p>
+        </h5>
       </section>
     );
   }
@@ -63,7 +69,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startTimer: () => dispatch(setTimer()),
+  startTimer: (seconds) => dispatch(setTimer(seconds)),
   endTimer: () => dispatch(timeOut()),
 });
 

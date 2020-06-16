@@ -15,6 +15,7 @@ import TriviaCard from '../components/TriviaCard';
 import NextButton from '../components/NextButton';
 
 function updatePlayerInfo(score, assertions, name, email) {
+  const storedGameState = JSON.parse(localStorage.getItem('state') || '{}');
   const state = {
     player: {
       name,
@@ -23,7 +24,8 @@ function updatePlayerInfo(score, assertions, name, email) {
       gravatarEmail: email,
     },
   };
-  const stringfyState = JSON.stringify(state);
+  const updateGameState = { ...storedGameState, ...state };
+  const stringfyState = JSON.stringify(updateGameState);
   localStorage.setItem('state', stringfyState);
 }
 
@@ -63,13 +65,8 @@ class Game extends Component {
       categoryID,
       difficulty,
       type,
-      score,
-      assertions,
-      userName,
-      userEmail,
       isLogged,
     } = this.props;
-    updatePlayerInfo(score, assertions, userName, userEmail);
     return isLogged ? getTriviaQuestions(token, categoryID, difficulty, type) : console.error('Not Logged');
   }
 
