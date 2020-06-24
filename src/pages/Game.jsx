@@ -15,7 +15,6 @@ import TriviaCard from '../components/TriviaCard';
 import NextButton from '../components/NextButton';
 import '../styles/Game.css';
 
-// local storage ainda não passa no teste
 class Game extends Component {
   static async updatePlayerInfo(score, assertions, name, email) {
     const storedGameState = await JSON.parse(localStorage.getItem('state') || '{}');
